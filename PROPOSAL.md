@@ -1,7 +1,3 @@
-# Software Specification Review (SSR) Template
-
-> **Purpose:** Use this template to review the requirements and scope of a software project before implementation. Adapt it to your lecturer's or team's required format.
-
 ## 1. Project Information
 
 - **Project name:** Earth-Titan Fitness
