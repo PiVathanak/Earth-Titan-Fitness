@@ -104,17 +104,7 @@ Name one optional feature that may be implemented if the core MVP is completed.
 - **Dependencies / risks:** Map API
 - **Why it is a stretch feature:** it hard to implement and need to spend money
 
-## 11. Review Decision
-
-- **Decision:** [Approved / Approved with Actions / Rejected / Re-review Required]
-- **Conditions or outstanding issues:** [List any remaining items]
-- **Reviewer comments:** [Summary of review]
-- **Approval / acknowledgement:**
-  - Product owner / stakeholder: [Name and date]
-  - Team representative: [Name and date]
-  - Reviewer / lecturer (if required): [Name and date]
-
-## Stretch feature
+## 7. Stretch feature
 
 Choose **one**:
 
