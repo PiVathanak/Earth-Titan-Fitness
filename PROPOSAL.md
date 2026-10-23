@@ -107,7 +107,7 @@ Features that can be postponed if time or resources are limited.
 - `expiration_date`
 - `status` (Active, Expired)
 
-## Relationships and Constraints
+## 6. Relationships and Constraints
 
 1. A user can have zero or one membership.
 2. Each membership belongs to one user.
