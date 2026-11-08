@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 // Images: left blank for now
 const heroBg = '' // TODO: add hero background image
@@ -143,19 +144,6 @@ const standards = [
   },
 ]
 
-const branchPhones = [
-  { name: 'Sector Alpha', phone: '(555) 019-2831' },
-  { name: 'Sector Bravo', phone: '(555) 019-2832' },
-  { name: 'Iron Vault Metro', phone: '(555) 019-2833' },
-  { name: 'Apex Compound', phone: '(555) 019-2834' },
-]
-
-const legalLinks = [
-  { label: 'Liability & Facility Protocol', path: 'liability-waiver' },
-  { label: 'Privacy Policy', path: 'privacy-policy' },
-  { label: 'Terms of Service', path: 'terms-of-service' },
-  { label: 'Access Disclaimers', path: 'access-disclaimers' },
-]
 </script>
 
 <template>
@@ -628,65 +616,7 @@ const legalLinks = [
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full bg-surface-container-lowest py-margin mt-space-xl">
-      <div class="max-w-7xl mx-auto px-margin">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-space-xl">
-          <div class="flex flex-col gap-space-sm">
-            <span class="font-headline-md text-headline-md uppercase text-on-surface"
-              >Earth-Titan</span
-            >
-            <p class="font-body-sm text-body-sm text-on-surface-variant">
-              Elite industrial conditioning architecture and high-throughput athletic facilities.
-              Engineered for absolute human performance.
-            </p>
-          </div>
-          <div class="flex flex-col gap-space-sm">
-            <span class="font-label-caps text-label-caps uppercase text-on-surface"
-              >Command &amp; Support</span
-            >
-            <div class="flex flex-col gap-1">
-              <span class="font-headline-sm text-headline-sm text-primary-container tracking-wider"
-                >1-800-TITAN-911</span
-              >
-              <span class="font-label-sm text-label-sm text-on-surface-variant"
-                >Operational Hotline (24/7 Rapid Response)</span
-              >
-            </div>
-          </div>
-          <div class="flex flex-col gap-space-sm">
-            <span class="font-label-caps text-label-caps uppercase text-on-surface"
-              >Branch Terminals</span
-            >
-            <ul class="flex flex-col gap-1 font-body-sm text-body-sm text-on-surface-variant">
-              <li v-for="b in branchPhones" :key="b.name">{{ b.name }}: {{ b.phone }}</li>
-            </ul>
-          </div>
-          <div class="flex flex-col gap-space-sm">
-            <span class="font-label-caps text-label-caps uppercase text-on-surface"
-              >Compliance &amp; Governance</span
-            >
-            <nav class="flex flex-col gap-1 font-body-sm text-body-sm text-on-surface-variant">
-              <a
-                v-for="l in legalLinks"
-                :key="l.path"
-                class="hover:text-on-surface transition-colors"
-                :data-path="l.path"
-                href="#"
-              >
-                {{ l.label }}
-              </a>
-            </nav>
-          </div>
-        </div>
-        <div
-          class="pt-space-md flex flex-col md:flex-row items-center justify-between text-on-surface-variant font-label-sm text-label-sm gap-space-sm"
-        >
-          <p>© 2024 Earth-Titan Athletic Conditioning Corp. All rights reserved.</p>
-          <p class="text-right">Engineered for High-Throughput Physicality.</p>
-        </div>
-      </div>
-    </footer>
+    <AppFooter />
   </div>
 </template>
 

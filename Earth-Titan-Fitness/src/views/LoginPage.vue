@@ -43,6 +43,7 @@ const granted = ref(false)
 const status = reactive({ visible: false, text: '', icon: 'info' })
 
 const emailPlaceholder = computed(() => presets[currentRole.value].placeholder)
+const isCustomer = computed(() => currentRole.value === 'member')
 
 const buttonLabel = computed(() => {
   if (isSubmitting.value) return 'VERIFYING CREDENTIAL CRYPTOGRAM...'
@@ -53,6 +54,9 @@ const buttonLabel = computed(() => {
 function setRole(role: Role) {
   currentRole.value = role
   granted.value = false
+  if (role !== 'member') {
+    form.gymId = ''
+  }
 }
 
 function showStatus(text: string, icon = 'info') {
@@ -230,8 +234,8 @@ function deskSupport() {
                   </div>
                 </div>
 
-                <!-- Gym ID / OTP -->
-                <div class="space-y-1.5">
+                <!-- Customer OTP -->
+                <div v-if="isCustomer" class="space-y-1.5">
                   <label
                     class="block font-label-caps text-label-caps text-secondary uppercase"
                     for="gymId"

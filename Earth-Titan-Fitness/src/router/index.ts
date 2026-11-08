@@ -14,14 +14,29 @@ const router = createRouter({
       component: () => import('../views/AboutPage.vue'),
     },
     {
+      path: '/branches',
+      name: 'branches',
+      component: () => import('../views/BranchesPage.vue'),
+    },
+    {
+      path: '/membership',
+      name: 'membership',
+      component: () => import('../views/MembershipPage.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginPage.vue'),
     },
     {
-      path: '/branches',
-      name: 'branches',
-      component: () => import('../views/BanchesPage.vue'),
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/AdminPage.vue'),
+    },
+    {
+      path: '/employee-status',
+      name: 'employee-status',
+      component: () => import('../views/EmployeeStatusPage.vue'),
     },
   ],
 })

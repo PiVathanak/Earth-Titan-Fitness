@@ -1,10 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import branch1 from '@/assets/branch1-1.png'
+import branch2 from '@/assets/branch1-2.png'
+import branch3 from '@/assets/branch1-3.png'
 
-// Images: left blank for now
 const heroBg = '' // TODO: add hero background image
-const logoUrl = '' // TODO: add logo image (footer)
 
 // Branch filter: 'all' shows everything, 'open' shows only branches that are open now
 const filter = ref('all')
@@ -87,7 +89,7 @@ const branches = [
   {
     name: 'Downtown Titanium Flagship',
     address: '108 Ironworks Blvd, Central Metro',
-    src: '', // TODO: add image
+    src: branch1,
     alt: 'Expansive multi-tier dark athletic gym with heavy dumbbell racks, powerlifting platforms, high industrial ceilings with exposed ductwork, and lifters training under dramatic red and warm spotlighting.',
     status: 'open',
     statusLabel: 'OPEN NOW',
@@ -106,7 +108,7 @@ const branches = [
   {
     name: 'Northside Heavy Athletics',
     address: '454 Olympic Way, North District',
-    src: '', // TODO: add image
+    src: branch2,
     alt: 'Heavy weight room with row upon row of matte black Olympic lifting platforms, bumper plates lined up neatly, athlete chalking hands, dark stone concrete architecture.',
     status: 'open',
     statusLabel: 'OPEN NOW',
@@ -125,7 +127,7 @@ const branches = [
   {
     name: 'Metro Core District',
     address: '89 Velocity Ave, Commercial Ring',
-    src: '', // TODO: add image
+    src: branch3,
     alt: 'High performance athletic training complex with rubber flooring, heavy red power racks, cable machines, dark architectural aesthetic and soft red rim backlighting.',
     status: 'modified',
     statusLabel: 'MODIFIED HOURS',
@@ -180,19 +182,6 @@ const benefits = [
   },
 ]
 
-const branchLogistics = [
-  'Downtown Obsidian Center: (555) 019-2831',
-  'Metro Heavy Iron Complex: (555) 019-4402',
-  'Titan High-Performance Lab: (555) 019-9981',
-  'Global Dispatch: dispatch@earthtitanfitness.com',
-]
-
-const complianceLinks = [
-  'Facility Liability Protocol',
-  'Member Biometric Agreement',
-  'Safety Audit Manifest',
-  'System Access Governance',
-]
 </script>
 
 <template>
@@ -520,19 +509,12 @@ const complianceLinks = [
               class="bg-surface-container p-space-lg lg:p-space-xl rounded-xl shadow-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-xl"
             >
               <div class="max-w-xl">
-                <div class="inline-flex items-center gap-space-xs mb-space-xs">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span
-                    class="font-label-caps text-label-caps text-emerald-400 uppercase tracking-wider"
-                    >Live System Feed</span
-                  >
-                </div>
                 <h2 class="font-headline-lg text-headline-lg text-on-surface uppercase mb-space-sm">
                   Titan Congestion Telemetry
                 </h2>
                 <p class="font-body-base text-body-base text-secondary mb-space-md">
-                  Our real-time sensor network aggregates platform utilization, cable station
-                  queues, and sauna occupancy. Check branch velocity before stepping into the arena.
+                  Review current facility utilization across lifting platforms, conditioning zones,
+                  and recovery areas before planning your training session.
                 </p>
                 <div
                   class="flex items-center gap-space-xl text-on-surface font-label-caps text-label-caps uppercase"
@@ -557,9 +539,6 @@ const complianceLinks = [
                   <span class="font-headline-sm text-headline-sm uppercase text-on-surface"
                     >Facility Load Breakdown</span
                   >
-                  <span class="font-label-caps text-label-caps text-emerald-400 uppercase"
-                    >Live Ping</span
-                  >
                 </div>
                 <div class="space-y-space-md">
                   <div v-for="row in loadBreakdown" :key="row.label">
@@ -577,11 +556,6 @@ const complianceLinks = [
                       ></div>
                     </div>
                   </div>
-                </div>
-                <div class="mt-space-md pt-space-sm text-center">
-                  <span class="font-label-sm text-label-sm text-secondary"
-                    >Updated 48 seconds ago via Turnstile Matrix</span
-                  >
                 </div>
               </div>
             </div>
@@ -638,117 +612,12 @@ const complianceLinks = [
               </div>
             </div>
 
-            <!-- Membership status banner -->
-            <div
-              class="bg-surface-container p-space-lg md:p-space-xl rounded-xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-space-lg relative overflow-hidden"
-            >
-              <div
-                class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none text-on-surface select-none"
-              >
-                <span class="material-symbols-outlined text-[180px]">fingerprint</span>
-              </div>
-              <div class="space-y-space-xs z-10 text-center md:text-left">
-                <span
-                  class="font-label-caps text-label-caps text-primary-container uppercase tracking-wider"
-                  >Lifter Account Matrix</span
-                >
-                <h3 class="font-headline-md text-headline-md uppercase text-on-surface">
-                  Already Part of the Earth-Titan Vanguard?
-                </h3>
-                <p class="font-body-sm text-body-sm text-secondary max-w-xl">
-                  Access your universal portal to verify current billing status, active check-in
-                  keycards, and manage your locker assignments without front desk queues.
-                </p>
-              </div>
-              <div
-                class="z-10 w-full md:w-auto flex flex-col sm:flex-row items-center gap-space-sm"
-              >
-                <a
-                  class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md rounded-lg font-headline-sm text-headline-sm uppercase text-on-primary-container bg-primary-container hover:bg-primary-container/90 transition-all shadow-lg shadow-primary-container/25"
-                  data-path="my-membership"
-                  href="#"
-                >
-                  <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
-                  <span>CHECK YOUR MEMBERSHIP STATUS</span>
-                </a>
-              </div>
-            </div>
           </div>
         </section>
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer
-      class="w-full bg-surface-container-lowest border-t border-surface-container-highest mt-auto"
-    >
-      <div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin py-space-xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-space-xl">
-          <div class="space-y-space-md">
-            <div class="flex items-center gap-space-sm group">
-              <img
-                v-if="logoUrl"
-                alt="Earth-Titan Fitness Logo"
-                class="h-8 w-auto object-contain"
-                :src="logoUrl"
-              />
-              <span
-                class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface"
-                >Earth-Titan</span
-              >
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-              Elite strength infrastructure and facility operational system. Built for maximum human
-              performance and unyielding athletic endurance.
-            </p>
-          </div>
-
-          <div class="space-y-space-sm">
-            <h3 class="font-label-caps text-label-caps uppercase text-on-surface tracking-wider">
-              Operational Emergency
-            </h3>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">
-              24/7 Facility Response Line:
-            </p>
-            <p class="font-stat-lg text-stat-lg text-primary-container tracking-tight">
-              1-800-TITAN-911
-            </p>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">
-              Duty Commander Hotline for Branch Outages and Medical Incident Lockdowns.
-            </p>
-          </div>
-
-          <div class="space-y-space-sm">
-            <h3 class="font-label-caps text-label-caps uppercase text-on-surface tracking-wider">
-              Branch Logistics
-            </h3>
-            <ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-              <li v-for="line in branchLogistics" :key="line">{{ line }}</li>
-            </ul>
-          </div>
-
-          <div class="space-y-space-sm">
-            <h3 class="font-label-caps text-label-caps uppercase text-on-surface tracking-wider">
-              Compliance &amp; Security
-            </h3>
-            <ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-              <li v-for="link in complianceLinks" :key="link">
-                <a class="hover:text-on-surface transition-colors" href="#">{{ link }}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          class="pt-space-lg border-t border-surface-container-high flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"
-        >
-          <span class="font-label-sm text-label-sm text-on-surface-variant"
-            >© 2024 Earth-Titan Fitness Holdings LLC. Industrial Strength Platform. All rights
-            reserved.</span
-          >
-        </div>
-      </div>
-    </footer>
+    <AppFooter />
   </div>
 </template>
 
