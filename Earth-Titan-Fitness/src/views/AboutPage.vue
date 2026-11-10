@@ -3,6 +3,9 @@ import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import branch6 from '@/assets/branch1-6.png'
+import heavyCalibrationIron from '@/assets/heavyCalibrationIron.png'
+import reinforceChalkDeck from '@/assets/reinforceChalkDeck.png'
+import cleanFuelNutritionDeport from '@/assets/cleanFuelNutritionDeport.png'
 
 const heroBg = branch6
 
@@ -45,19 +48,19 @@ const pillars = [
 
 const gallery = [
   {
-    src: '', // TODO: add image
+    src: heavyCalibrationIron,
     alt: 'Close up of heavily knurled Olympic barbells and stacked calibrated iron weight plates in a dark atmospheric powerlifting gym with industrial neon glow',
     caption: 'HEAVY CALIBRATION IRON',
     icon: 'verified',
   },
   {
-    src: '', // TODO: add image
+    src: reinforceChalkDeck,
     alt: 'Atmospheric wide shot of an industrial gym floor with chalk powder hanging in dramatic overhead spotlights and athletes training on heavy duty power racks',
     caption: 'REINFORCED CHALK DECKS',
     icon: 'sports_mma',
   },
   {
-    src: '', // TODO: add image
+    src: cleanFuelNutritionDeport,
     alt: 'Tactical nutrition laboratory counter inside a high-end dark strength facility with stainless steel shaker apparatus and clean performance beverage taps',
     caption: 'CLEAN FUEL NUTRITION DEPOT',
     icon: 'local_cafe',
