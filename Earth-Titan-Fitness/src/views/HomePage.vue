@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import branch1 from '@/assets/branch1-1.png'
 import branch2 from '@/assets/branch1-2.png'
 import branch3 from '@/assets/branch1-3.png'
+import branch4 from '@/assets/branch1-4.png'
 
-const heroBg = '' // TODO: add hero background image
+const heroBg = branch4
 
 // Branch filter: 'all' shows everything, 'open' shows only branches that are open now
 const filter = ref('all')
@@ -490,14 +492,14 @@ const benefits = [
                   all 5 facilities without reassignment.</span
                 >
               </div>
-              <a
+              <RouterLink
                 class="font-label-caps text-label-caps uppercase text-primary-container hover:text-primary transition-colors whitespace-nowrap flex items-center gap-1"
                 data-path="our-branches"
-                href="#"
+                to="/branches"
               >
                 <span>Explore All 5 Branches &amp; Maps</span>
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
-              </a>
+              </RouterLink>
             </div>
           </div>
         </section>

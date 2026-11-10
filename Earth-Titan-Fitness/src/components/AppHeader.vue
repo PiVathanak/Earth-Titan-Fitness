@@ -8,7 +8,7 @@ defineProps<{ active?: string }>()
 const navLinks = [
   { label: 'Home', path: 'home', href: '/' },
   { label: 'About', path: 'about', href: '/about' },
-  { label: 'Our Branches', path: 'our-branches', href: '#branches' },
+  { label: 'Our Branches', path: 'our-branches', href: '/branches' },
   { label: 'Supplements', path: 'supplements', href: '#supplements' },
   { label: 'Food & Beverages', path: 'food-and-beverages', href: '#food-beverages' },
   { label: 'Membership', path: 'membership', href: '#membership', locked: true },
@@ -33,11 +33,11 @@ const navLinks = [
         </RouterLink>
         <nav class="hidden lg:flex items-center gap-space-xs">
           <component
-            :is="link.path === 'home' || link.path === 'about' ? RouterLink : 'a'"
+            :is="link.href.startsWith('/') ? RouterLink : 'a'"
             v-for="link in navLinks"
             :key="link.path"
-            :to="link.path === 'home' || link.path === 'about' ? link.href : undefined"
-            :href="link.path === 'home' || link.path === 'about' ? undefined : link.href"
+            :to="link.href.startsWith('/') ? link.href : undefined"
+            :href="link.href.startsWith('/') ? undefined : link.href"
             :data-path="link.path"
             class="px-space-md py-space-sm rounded-lg font-label-caps text-label-caps uppercase transition-colors hover:text-on-surface hover:bg-surface-container"
             :class="[

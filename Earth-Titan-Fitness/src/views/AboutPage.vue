@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import branch6 from '@/assets/branch1-6.png'
 
-// Images: left blank for now
-const heroBg = '' // TODO: add hero background image
+const heroBg = branch6
 
 const heroStats = [
   { value: '05', label: 'Regional Compounds', sub: 'Heavy industrial sectors' },
@@ -156,14 +157,11 @@ const standards = [
         <!-- Hero -->
         <section class="relative w-full -mt-20 overflow-hidden bg-surface-container-lowest">
           <div
-            class="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-luminosity scale-105 transform motion-safe:transition-transform motion-safe:duration-1000"
+            class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity pointer-events-none scale-105"
             :style="heroBg ? { backgroundImage: `url('${heroBg}')` } : {}"
           ></div>
           <div
-            class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface-container-lowest/80"
-          ></div>
-          <div
-            class="absolute inset-0 bg-radial-at-c from-primary-container/10 via-transparent to-transparent pointer-events-none"
+            class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface-container-lowest/70 pointer-events-none"
           ></div>
 
           <div
@@ -593,14 +591,14 @@ const standards = [
               <div
                 class="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md w-full lg:w-auto"
               >
-                <a
+                <RouterLink
                   class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm uppercase px-space-lg py-space-md rounded-sm transition-all text-center flex items-center justify-center gap-2"
                   data-path="our-branches"
-                  href="#"
+                  to="/branches"
                 >
                   <span class="material-symbols-outlined text-[20px]">explore</span>
                   EXPLORE OUR BRANCHES
-                </a>
+                </RouterLink>
                 <a
                   class="bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-sm text-headline-sm uppercase px-space-lg py-space-md rounded-sm transition-all shadow-[0_0_16px_rgba(229,9,20,0.4)] text-center flex items-center justify-center gap-2"
                   data-path="membership"
