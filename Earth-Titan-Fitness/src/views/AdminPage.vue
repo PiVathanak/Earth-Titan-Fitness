@@ -5,8 +5,10 @@ import logoUrl from '@/assets/logo.png'
 import BranchOverview from '@/components/admin/BranchOverview.vue'
 import EmployeeOverview from '@/components/admin/EmployeeOverview.vue'
 import MemberOverview from '@/components/admin/MemberOverview.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const auth = useAuthStore()
 const activeOverview = ref<'members' | 'employees' | 'branches'>('members')
 
 function overviewFromHash(): 'members' | 'employees' | 'branches' {
@@ -24,6 +26,7 @@ function selectOverview(overview: 'members' | 'employees' | 'branches') {
 }
 
 function logout() {
+  auth.logout()
   router.push('/login')
 }
 
@@ -54,7 +57,7 @@ onBeforeUnmount(() => {
           <button type="button">⌁ <span>Financial & Member Analytics</span></button>
         </nav>
       </div>
-      <div class="sidebar-footer"><span>LIVE CAPACITY</span><div class="capacity"><i /></div><strong>Marcus Vance</strong><small>Desk Commander</small><button class="logout-button" type="button" @click="logout">↪ Logout</button></div>
+      <div class="sidebar-footer"><span>LIVE CAPACITY</span><div class="capacity"><i /></div><strong>{{ auth.user?.name ?? 'Administrator' }}</strong><small>Gym Administrator</small><button class="logout-button" type="button" @click="logout">↪ Logout</button></div>
     </aside>
     <main>
       <header class="topbar"><div><span class="eyebrow">COMMAND CENTER / OPERATIONS</span><h1>{{ activeOverview === 'members' ? 'Member Overview' : activeOverview === 'employees' ? 'Employee Overview' : 'Branch Overview' }}</h1></div><div class="topbar-user"><span class="online" /> SYSTEM ONLINE <b>MV</b></div></header>

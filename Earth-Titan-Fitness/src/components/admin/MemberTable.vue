@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AdminMember } from '@/types/admin'
+import { formatDate } from '@/utils/membership'
 
 defineProps<{
   members: AdminMember[]
@@ -36,8 +37,8 @@ const statusDetails: Record<AdminMember['status'], { label: string; icon: string
           <td class="member-name"><span :class="`status-dot status-dot--${member.status}`" />{{ member.name }}</td>
           <td class="muted">{{ member.email }}</td>
           <td><span class="member-id">{{ member.memberId }}</span></td>
-          <td>{{ member.registerDate }}</td>
-          <td>{{ member.expireDate }}</td>
+          <td>{{ formatDate(member.registerDate) }}</td>
+          <td>{{ formatDate(member.expireDate) }}</td>
           <td>
             <span :class="`status status--${member.status}`">
               {{ statusDetails[member.status].icon }} {{ statusDetails[member.status].label }}

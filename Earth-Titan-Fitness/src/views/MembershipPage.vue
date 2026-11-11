@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { useAuthStore } from '@/stores/auth'
+import { membershipsApi } from '@/api/memberships'
+import { errorMessage } from '@/api/http'
+import { daysBetween, displayStatus, formatDate, todayIso } from '@/utils/membership'
+import type { Membership } from '@/types/api'
 import type {
   MemberProfile,
   MembershipCard,
@@ -11,36 +16,66 @@ import type {
 } from '@/types/membership'
 
 
-const memberProfile: MemberProfile = {
-  name: 'Marcus Vance',
-  title: 'HQ Operational Dir.',
+// ---- Data for the logged-in customer (US-02), loaded from the API ----
+const auth = useAuthStore()
+const membership = ref<Membership | null>(null)
+const loadState = ref<'loading' | 'error' | 'empty' | 'success'>('loading')
+const loadError = ref<string | null>(null)
+
+async function loadMembership() {
+  loadState.value = 'loading'
+  loadError.value = null
+  try {
+    // Customers can only see their own membership: query by the session's userId
+    const [mine] = await membershipsApi.findByUser(auth.user!.id)
+    membership.value = mine ?? null
+    loadState.value = mine ? 'success' : 'empty'
+  } catch (e) {
+    loadError.value = errorMessage(e)
+    loadState.value = 'error'
+  }
+}
+onMounted(loadMembership)
+
+const memberStatus = computed(() => (membership.value ? displayStatus(membership.value.expirationDate) : 'expired'))
+
+const memberProfile = computed<MemberProfile>(() => ({
+  name: auth.user?.name ?? 'Member',
+  title: membership.value?.plan ?? 'No active plan',
   avatarUrl:
     'https://lh3.googleusercontent.com/aida-public/AB6AXuALId_VwxuSAiRS8McUZxZtfPtTqo4FaYOvEEBepSsyLDSxgVKztxCaKKeXNK3uCLnSj88Ej9CgosCkwHLJmQjNcUON7lRWDKpfmhRR6glOnhHTKl4KIp2hg_H2bKhHxB8-invOHOVPn-l3xCQFC0sclLhl-_dKZ1pfYU3mNnNDVOL4FwyZKPMFY7fpzSHrDm5SRIevIYdPC4xzEjXKSvocZGFvR8HYrvNTrmkI8_cNyAKybz9tsq6m',
-  memberId: 'ETF-89241',
+  memberId: membership.value?.membershipCode ?? '—',
   homeBranch: 'Downtown Titanium Flagship',
-  memberSince: 'Jan 15, 2024',
-  validUntil: 'Jan 15, 2025',
-  status: 'active',
-}
+  memberSince: formatDate(membership.value?.registrationDate ?? ''),
+  validUntil: formatDate(membership.value?.expirationDate ?? ''),
+  status: memberStatus.value,
+}))
 
-const membershipCard: MembershipCard = {
-  cardTitle: 'Titan Black Card',
+const membershipCard = computed<MembershipCard>(() => ({
+  cardTitle: membership.value?.plan ?? 'Titan Black Card',
   cardSubtitle: 'Universal All-Access Passport',
-  cardholderName: 'Marcus Vance',
-  titanId: 'ETF-89241',
-  homeBranch: 'Downtown Titanium Flagship',
-  memberSince: 'Jan 15, 2024',
-  validUntil: 'Jan 15, 2025',
-  branchPrivilege: '5 / 5 Unlocked',
-  status: 'active',
-}
+  cardholderName: memberProfile.value.name,
+  titanId: memberProfile.value.memberId,
+  homeBranch: memberProfile.value.homeBranch,
+  memberSince: memberProfile.value.memberSince,
+  validUntil: memberProfile.value.validUntil,
+  branchPrivilege: memberStatus.value === 'expired' ? '0 / 5 Locked' : '5 / 5 Unlocked',
+  status: memberStatus.value,
+}))
 
-const cycleChronometer: CycleChronometer = {
-  daysRemaining: 242,
-  daysEnrolled: 123,
-  totalDays: 365,
-  progressPercent: 66,
-}
+const cycleChronometer = computed<CycleChronometer>(() => {
+  const m = membership.value
+  if (!m) return { daysRemaining: 0, daysEnrolled: 0, totalDays: 0, progressPercent: 0 }
+  const today = todayIso()
+  const totalDays = Math.max(1, daysBetween(m.registrationDate, m.expirationDate))
+  const daysEnrolled = Math.min(totalDays, Math.max(0, daysBetween(m.registrationDate, today)))
+  return {
+    daysRemaining: Math.max(0, daysBetween(today, m.expirationDate)),
+    daysEnrolled,
+    totalDays,
+    progressPercent: Math.round((daysEnrolled / totalDays) * 100),
+  }
+})
 
 const branches: BranchAccess[] = [
   {
@@ -131,7 +166,7 @@ function handleModalBackdrop(e: MouseEvent) {
 }
 
 function copyId() {
-  navigator.clipboard.writeText(memberProfile.memberId)
+  navigator.clipboard.writeText(memberProfile.value.memberId)
 }
 
 </script>
@@ -219,6 +254,28 @@ function copyId() {
             </div>
           </div>
 
+          <div
+            v-if="loadState === 'error'"
+            class="p-4 rounded-xl bg-red-950/50 border border-red-800 flex items-center justify-between gap-4"
+            role="alert"
+          >
+            <span>Could not load your membership: {{ loadError }}</span>
+            <button
+              type="button"
+              class="px-4 py-1.5 rounded bg-primary-container text-on-primary-container font-label-caps uppercase"
+              @click="loadMembership"
+            >
+              Retry
+            </button>
+          </div>
+          <div
+            v-else-if="memberStatus === 'expired'"
+            class="p-4 rounded-xl bg-red-950/50 border border-red-800 font-label-caps uppercase text-red-300"
+            role="alert"
+          >
+            Membership expired on {{ memberProfile.validUntil }}. Renew at the front desk to restore branch access.
+          </div>
+
           <!-- Grid: Digital Membership Card + Dynamic Countdown & Status Panel -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
             <!-- Digital Titan Card (7 Cols) -->
@@ -276,8 +333,16 @@ function copyId() {
                       class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"
                     ></span>
                   </span>
-                  <span class="font-label-caps text-label-caps uppercase text-emerald-400"
-                    >ACTIVE</span
+                  <span
+                    class="font-label-caps text-label-caps uppercase"
+                    :class="
+                      memberStatus === 'active'
+                        ? 'text-emerald-400'
+                        : memberStatus === 'expiring'
+                          ? 'text-amber-400'
+                          : 'text-red-400'
+                    "
+                    >{{ memberStatus }}</span
                   >
                 </div>
               </div>

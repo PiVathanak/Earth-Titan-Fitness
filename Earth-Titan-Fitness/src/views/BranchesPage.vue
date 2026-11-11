@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import branch1 from '@/assets/branch1-1.png'
-import branch2 from '@/assets/branch1-2.png'
-import branch3 from '@/assets/branch1-3.png'
-import branch4 from '@/assets/branch1-4.png'
+import { useBranchesStore } from '@/stores/branches'
+import { toBranchCard } from '@/utils/branchView'
 
 // Images: left blank for now
 const mapBg = ''
+
+const store = useBranchesStore()
+onMounted(() => store.fetchAll())
 
 const searchQuery = ref('')
 const filter = ref('all')
@@ -18,128 +20,20 @@ const filters = [
   { key: 'open', label: 'Open Now' },
 ]
 
-const branches = [
-  {
-    name: 'Downtown Titanium Flagship',
-    address: '108 Ironworks Blvd, Central Metro, NY 10001',
-    image: branch1,
-    imageClass: '',
-    tags: ['open', 'olympic'],
-    statusLabel: 'OPEN NOW (Closes at 23:00)',
-    statusClass: 'bg-emerald-950/90 text-emerald-400',
-    dotClass: 'bg-emerald-400 animate-pulse',
-    badge: 'HQ Node 01',
-    badgeClass: 'text-secondary',
-    regular: ['Mon-Fri: 05:00 - 23:00', 'Sat-Sun: 06:00 - 21:00'],
-    holidayLabel: 'Holiday Schedule Status',
-    holidayTitle: 'Regular Operation',
-    holidayTitleClass: 'text-on-surface',
-    holidaySub: 'Confirmed for Memorial Day',
-    amenities: [
-      { icon: 'fitness_center', label: 'Powerlifting Pods' },
-      { icon: 'sports_gymnastics', label: 'Olympic Platforms' },
-      { icon: 'ac_unit', label: 'Cold Plunge & Sauna' },
-      { icon: 'sprint', label: 'Turf Sprint Track' },
-    ],
-    loadIcon: 'speed',
-    loadText: '68% Capacity (312 Lifters)',
-    loadTextClass: 'text-on-surface',
-    loadBarClass: 'bg-emerald-500',
-    loadWidth: '68%',
-  },
-  {
-    name: 'Northside Heavy Athletics',
-    address: '454 Olympic Way, North District, NY 10024',
-    image: branch2,
-    imageClass: '',
-    tags: ['open'],
-    statusLabel: 'OPEN NOW (Closes at 22:00)',
-    statusClass: 'bg-emerald-950/90 text-emerald-400',
-    dotClass: 'bg-emerald-400 animate-pulse',
-    badge: 'Branch 02',
-    badgeClass: 'text-secondary',
-    regular: ['Mon-Sun: 06:00 - 22:00', '7 Days Operating Window'],
-    holidayLabel: 'Holiday Schedule Status',
-    holidayTitle: 'Adjusted 08:00 - 18:00',
-    holidayTitleClass: 'text-amber-400',
-    holidaySub: 'Labor Day Special Protocol',
-    amenities: [
-      { icon: 'weight', label: 'Free Weights up to 150lbs' },
-      { icon: 'precision_manufacturing', label: 'Hammer Strength Circuit' },
-      { icon: 'chair', label: 'Recovery Lounge' },
-    ],
-    loadIcon: 'speed',
-    loadText: '42% Capacity (145 Lifters)',
-    loadTextClass: 'text-on-surface',
-    loadBarClass: 'bg-emerald-500',
-    loadWidth: '42%',
-  },
-  {
-    name: 'West End Powerhouse',
-    address: '780 Industrial Parkway, Westside, NY 10036',
-    image: branch3,
-    imageClass: 'opacity-70',
-    tags: ['closed'],
-    statusLabel: 'CLOSED (Opens tomorrow at 05:00)',
-    statusClass: 'bg-red-950/90 text-red-400',
-    dotClass: 'bg-red-500',
-    badge: 'Branch 03',
-    badgeClass: 'text-secondary',
-    regular: ['Mon-Fri: 05:00 - 23:00', 'Sat-Sun: 07:00 - 20:00'],
-    holidayLabel: 'Holiday Notice',
-    holidayTitle: 'Scheduled Maintenance',
-    holidayTitleClass: 'text-error',
-    holidaySub: 'Independence Day Full Lockdown',
-    amenities: [
-      { icon: 'sports_mma', label: 'Combat Sparring Ring' },
-      { icon: 'hardware', label: 'Strongman Log & Stones' },
-      { icon: 'shower', label: 'Hydrotherapy Suite' },
-    ],
-    loadIcon: 'lock_clock',
-    loadText: 'Facility Offline',
-    loadTextClass: 'text-secondary',
-    loadBarClass: 'bg-secondary-container',
-    loadWidth: '0%',
-  },
-  {
-    name: 'Metro Core District',
-    address: '89 Velocity Ave, Financial Quarter, NY 10005',
-    image: branch4,
-    imageClass: '',
-    tags: ['open', '247'],
-    statusLabel: 'OPEN 24 HOURS',
-    statusClass: 'bg-emerald-950/90 text-emerald-400',
-    dotClass: 'bg-emerald-400 animate-pulse',
-    badge: 'Autonomous 04',
-    badgeClass: 'text-primary-container',
-    regular: ['24/7 Continuous Access', 'Keyless RFID & App Pass'],
-    holidayLabel: 'Holiday Schedule Status',
-    holidayTitle: 'Always Open',
-    holidayTitleClass: 'text-emerald-400',
-    holidaySub: 'Zero Interruption Protocol',
-    amenities: [
-      { icon: 'qr_code_scanner', label: 'Keyless Access' },
-      { icon: 'security', label: '24/7 CCTV & Guard' },
-      { icon: 'bolt', label: 'Hi-Velocity Functional Rig' },
-    ],
-    loadIcon: 'speed',
-    loadText: '28% Capacity (64 Lifters)',
-    loadTextClass: 'text-on-surface',
-    loadBarClass: 'bg-emerald-500',
-    loadWidth: '28%',
-  },
-]
+// Raw API data -> card view model (status, hours, holiday, load)
+const branches = computed(() => store.items.map((b) => toBranchCard(b)))
+const openCount = computed(() => branches.value.filter((b) => b.isOpen).length)
+const pad = (n: number) => String(n).padStart(2, '0')
 
 // Search by name/address, then apply the status filter
 const filteredBranches = computed(() => {
   const q = searchQuery.value.toLowerCase().trim()
-  return branches.filter((b) => {
+  return branches.value.filter((b) => {
     const matchesQuery = !q || `${b.name} ${b.address}`.toLowerCase().includes(q)
-    const matchesFilter = filter.value === 'all' || b.tags.includes(filter.value)
+    const matchesFilter = filter.value === 'all' || (filter.value === 'open' && b.isOpen)
     return matchesQuery && matchesFilter
   })
 })
-
 </script>
 
 <template>
@@ -179,7 +73,7 @@ const filteredBranches = computed(() => {
                     >Active Nodes</span
                   >
                   <span class="font-stat-lg text-stat-lg text-on-surface leading-none mt-1"
-                    >04 / 04</span
+                    >{{ pad(openCount) }} / {{ pad(branches.length) }}</span
                   >
                 </div>
                 <div class="w-px h-8 bg-surface-container-highest"></div>
@@ -256,10 +150,47 @@ const filteredBranches = computed(() => {
 
         <!-- Branch cards -->
         <div class="max-w-7xl mx-auto w-full px-margin-mobile lg:px-margin py-space-xl">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+          <!-- Loading state -->
+          <div
+            v-if="store.status === 'loading' || store.status === 'idle'"
+            class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg"
+            aria-busy="true"
+          >
+            <div v-for="n in 4" :key="n" class="h-[32rem] rounded-xl bg-surface-container animate-pulse"></div>
+            <p class="lg:col-span-2 text-center text-secondary">Loading branches…</p>
+          </div>
+
+          <!-- Error state -->
+          <div
+            v-else-if="store.status === 'error'"
+            class="p-space-lg rounded-xl bg-red-950/40 border border-red-900 text-center"
+            role="alert"
+          >
+            <span class="material-symbols-outlined text-4xl text-error">cloud_off</span>
+            <h2 class="font-headline-md text-headline-md uppercase mt-2">Could not load branches</h2>
+            <p class="text-secondary mt-1">{{ store.error }}</p>
+            <button
+              type="button"
+              class="mt-4 px-space-md py-2 rounded bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase"
+              @click="store.fetchAll()"
+            >
+              Try again
+            </button>
+          </div>
+
+          <!-- Empty state (API returned no branches) -->
+          <p
+            v-else-if="store.isEmpty"
+            class="text-center font-body-base text-body-base text-secondary py-space-xl"
+          >
+            No branches have been added yet.
+          </p>
+
+          <!-- Success state -->
+          <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
             <div
               v-for="b in filteredBranches"
-              :key="b.name"
+              :key="b.id"
               class="flex flex-col bg-surface-container rounded-xl shadow-xl overflow-hidden group hover:bg-surface-container-high transition-colors"
             >
               <div class="relative h-60 w-full overflow-hidden">
@@ -382,6 +313,12 @@ const filteredBranches = computed(() => {
                   >
                     <span class="material-symbols-outlined text-base">directions</span> Directions
                   </button>
+                  <RouterLink
+                    :to="{ name: 'branch-detail', params: { id: b.id } }"
+                    class="w-full py-3 px-space-md rounded bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase hover:bg-primary-container/90 transition-colors flex items-center justify-center gap-1"
+                  >
+                    <span class="material-symbols-outlined text-base">info</span> View Details
+                  </RouterLink>
                 </div>
               </div>
             </div>
@@ -389,7 +326,7 @@ const filteredBranches = computed(() => {
 
           <!-- Empty state when search/filter matches nothing -->
           <p
-            v-if="filteredBranches.length === 0"
+            v-if="store.status === 'success' && !store.isEmpty && filteredBranches.length === 0"
             class="text-center font-body-base text-body-base text-secondary py-space-xl"
           >
             No branches match your search.

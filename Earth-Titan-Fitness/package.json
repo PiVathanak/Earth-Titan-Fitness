@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "api": "json-server --watch db.json --port 3000",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -25,6 +26,7 @@
     "@vue/test-utils": "^2.5.0",
     "@vue/tsconfig": "^0.9.1",
     "jsdom": "^30.0.1",
+    "json-server": "^0.17.4",
     "npm-run-all2": "^9.0.3",
     "prettier": "3.9.6",
     "typescript": "~6.0.0",

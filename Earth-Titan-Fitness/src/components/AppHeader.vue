@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import logoUrl from '@/assets/logo.png'
+import { homeForRole, useAuthStore } from '@/stores/auth'
 
 // "active" decides which nav item is highlighted, e.g. <AppHeader active="about" />
 defineProps<{ active?: string }>()
+
+const auth = useAuthStore()
+const router = useRouter()
 
 const navLinks = [
   { label: 'Home', path: 'home', href: '/' },
@@ -11,8 +15,13 @@ const navLinks = [
   { label: 'Our Branches', path: 'our-branches', href: '/branches' },
   { label: 'Supplements', path: 'supplements', href: '#supplements' },
   { label: 'Food & Beverages', path: 'food-and-beverages', href: '#food-beverages' },
-  { label: 'Membership', path: 'membership', href: '#membership', locked: true },
+  { label: 'Membership', path: 'membership', href: '/membership', locked: true },
 ]
+
+function logout() {
+  auth.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -48,14 +57,32 @@ const navLinks = [
             ]"
           >
             <span>{{ link.label }}</span>
-            <span v-if="link.locked" class="material-symbols-outlined text-sm text-secondary"
+            <span
+              v-if="link.locked && !auth.isLoggedIn"
+              class="material-symbols-outlined text-sm text-secondary"
               >lock</span
             >
           </component>
         </nav>
       </div>
       <div class="flex items-center gap-space-md">
+        <template v-if="auth.user && auth.role">
+          <RouterLink
+            :to="homeForRole[auth.role]"
+            class="hidden sm:inline font-label-caps text-label-caps uppercase text-secondary hover:text-on-surface"
+            >{{ auth.user.name }}</RouterLink
+          >
+          <button
+            type="button"
+            class="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-lg font-headline-sm text-headline-sm uppercase text-on-surface bg-surface-container-high hover:bg-surface-bright transition-all"
+            @click="logout"
+          >
+            <span class="material-symbols-outlined text-lg">logout</span>
+            <span>Log Out</span>
+          </button>
+        </template>
         <RouterLink
+          v-else
           class="inline-flex items-center justify-center gap-space-xs px-space-lg py-space-sm rounded-lg font-headline-sm text-headline-sm uppercase text-on-primary-container bg-primary-container hover:bg-primary-container/90 transition-all shadow-md shadow-primary-container/20"
           data-path="login"
           to="/login"

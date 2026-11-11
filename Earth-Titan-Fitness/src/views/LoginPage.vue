@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
+import { homeForRole, useAuthStore } from '@/stores/auth'
+import type { UserRole } from '@/types/api'
 
 type Role = 'member' | 'staff' | 'admin'
 
@@ -37,10 +40,45 @@ const form = reactive({
 
 const showPassword = ref(false)
 const showGymId = ref(false)
-const isSubmitting = ref(false)
 const granted = ref(false)
 
-const status = reactive({ visible: false, text: '', icon: 'info' })
+const auth = useAuthStore()
+const router = useRouter()
+const route = useRoute()
+const isSubmitting = computed(() => auth.loading)
+
+// Login tab -> role stored in db.json
+const roleMap: Record<Role, UserRole> = { member: 'customer', staff: 'employee', admin: 'admin' }
+
+const status = reactive({ visible: false, text: '', icon: 'info', isError: false })
+
+// ---- Validation: one message per field, shown under the input ----
+type Field = 'email' | 'password' | 'gymId'
+const touched = reactive<Record<Field, boolean>>({ email: false, password: false, gymId: false })
+const submitted = ref(false)
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
+const errors = computed<Record<Field, string>>(() => ({
+  email: !form.email.trim()
+    ? 'Email address is required.'
+    : !EMAIL_RE.test(form.email.trim())
+      ? 'Enter a valid email, e.g. athlete@titanathletics.io.'
+      : '',
+  password: !form.password
+    ? 'Password is required.'
+    : form.password.length < 6
+      ? 'Password must be at least 6 characters.'
+      : '',
+  gymId: !isCustomer.value
+    ? ''
+    : !form.gymId.trim()
+      ? 'Gym ID is required for customers.'
+      : !/^ETF-\d{5}$/i.test(form.gymId.trim())
+        ? 'Gym ID must look like ETF-12345.'
+        : '',
+}))
+const showError = (field: Field) => (touched[field] || submitted.value) && errors.value[field]
+const isValid = computed(() => Object.values(errors.value).every((m) => !m))
 
 const emailPlaceholder = computed(() => presets[currentRole.value].placeholder)
 const isCustomer = computed(() => currentRole.value === 'member')
@@ -54,32 +92,38 @@ const buttonLabel = computed(() => {
 function setRole(role: Role) {
   currentRole.value = role
   granted.value = false
+  status.visible = false
   if (role !== 'member') {
     form.gymId = ''
   }
 }
 
-function showStatus(text: string, icon = 'info') {
+function showStatus(text: string, icon = 'info', isError = false) {
   status.text = text
   status.icon = icon
+  status.isError = isError
   status.visible = true
 }
 
-function handleAuthenticate() {
+async function handleAuthenticate() {
   if (isSubmitting.value) return
-  isSubmitting.value = true
+  submitted.value = true
   granted.value = false
+  if (!isValid.value) {
+    showStatus('Please fix the highlighted fields.', 'error', true)
+    return
+  }
   showStatus('Routing SHA-256 signature to Node Cluster 01...', 'lock')
 
-  // Fake delay: replace with a real API call later
-  setTimeout(() => {
-    isSubmitting.value = false
+  try {
+    const user = await auth.login(form.email, form.password, roleMap[currentRole.value], form.gymId)
     granted.value = true
-    showStatus(
-      `Session validated! Welcome to Earth-Titan Portal (${form.email}). Redirecting...`,
-      'verified_user',
-    )
-  }, 1400)
+    showStatus(`Session validated! Welcome, ${user.name}. Redirecting...`, 'verified_user')
+    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : null
+    router.push(redirect ?? homeForRole[user.role])
+  } catch {
+    showStatus(auth.error ?? 'Login failed.', 'error', true)
+  }
 }
 
 function forgotPassword() {
@@ -168,7 +212,7 @@ function deskSupport() {
               </div>
 
               <!-- Form -->
-              <form class="space-y-4" @submit.prevent="handleAuthenticate">
+              <form class="space-y-4" novalidate @submit.prevent="handleAuthenticate">
                 <!-- Email -->
                 <div class="space-y-1.5">
                   <label
@@ -186,11 +230,18 @@ function deskSupport() {
                       v-model="form.email"
                       name="email"
                       type="email"
-                      required
+                      autocomplete="email"
                       :placeholder="emailPlaceholder"
+                      :aria-invalid="!!showError('email')"
+                      aria-describedby="email-error"
                       class="w-full bg-surface-container pl-11 pr-4 py-3 rounded font-body-base text-body-base text-on-surface placeholder:text-secondary/50 focus:outline-none focus:bg-surface-container-high transition-all"
+                      :class="showError('email') ? 'ring-1 ring-error' : ''"
+                      @blur="touched.email = true"
                     />
                   </div>
+                  <p v-if="showError('email')" id="email-error" class="text-xs text-error">
+                    {{ errors.email }}
+                  </p>
                 </div>
 
                 <!-- Password -->
@@ -217,10 +268,14 @@ function deskSupport() {
                       id="password"
                       v-model="form.password"
                       name="password"
-                      required
+                      autocomplete="current-password"
                       placeholder="••••••••••••"
                       :type="showPassword ? 'text' : 'password'"
+                      :aria-invalid="!!showError('password')"
+                      aria-describedby="password-error"
                       class="w-full bg-surface-container pl-11 pr-11 py-3 rounded font-body-base text-body-base text-on-surface placeholder:text-secondary/50 focus:outline-none focus:bg-surface-container-high transition-all"
+                      :class="showError('password') ? 'ring-1 ring-error' : ''"
+                      @blur="touched.password = true"
                     />
                     <button
                       type="button"
@@ -232,6 +287,9 @@ function deskSupport() {
                       }}</span>
                     </button>
                   </div>
+                  <p v-if="showError('password')" id="password-error" class="text-xs text-error">
+                    {{ errors.password }}
+                  </p>
                 </div>
 
                 <!-- Customer OTP -->
@@ -250,10 +308,13 @@ function deskSupport() {
                       id="gymId"
                       v-model="form.gymId"
                       name="gymId"
-                      required
-                      placeholder="••••••••"
+                      placeholder="ETF-00000"
                       :type="showGymId ? 'text' : 'password'"
+                      :aria-invalid="!!showError('gymId')"
+                      aria-describedby="gymId-error"
                       class="w-full bg-surface-container pl-11 pr-11 py-3 rounded font-body-base text-body-base text-on-surface placeholder:text-secondary/50 focus:outline-none focus:bg-surface-container-high transition-all tracking-wider"
+                      :class="showError('gymId') ? 'ring-1 ring-error' : ''"
+                      @blur="touched.gymId = true"
                     />
                     <button
                       type="button"
@@ -265,7 +326,10 @@ function deskSupport() {
                       }}</span>
                     </button>
                   </div>
-                  <p class="font-body-sm text-xs text-secondary/80">
+                  <p v-if="showError('gymId')" id="gymId-error" class="text-xs text-error">
+                    {{ errors.gymId }}
+                  </p>
+                  <p v-else class="font-body-sm text-xs text-secondary/80">
                     Enter your assigned Gym ID as your one-time verification passcode.
                   </p>
                 </div>
@@ -299,7 +363,9 @@ function deskSupport() {
               <!-- Status message -->
               <div
                 v-if="status.visible"
-                class="mt-4 p-3 rounded bg-surface-container-highest text-on-surface font-body-sm text-body-sm flex items-center space-x-2"
+                class="mt-4 p-3 rounded text-on-surface font-body-sm text-body-sm flex items-center space-x-2"
+                :class="status.isError ? 'bg-error-container/60' : 'bg-surface-container-highest'"
+                :role="status.isError ? 'alert' : 'status'"
               >
                 <span class="material-symbols-outlined text-primary-container text-lg">{{
                   status.icon

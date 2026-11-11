@@ -1,0 +1,112 @@
+{
+  "users": [
+    { "id": 1, "name": "Marcus Vance", "email": "m.vance@titanathletics.io", "password": "titan123", "role": "customer" },
+    { "id": 2, "name": "Elena Rostova", "email": "e.rostova@heavyiron.org", "password": "titan123", "role": "customer" },
+    { "id": 3, "name": "Damian Kross", "email": "d.kross@titanathletics.io", "password": "titan123", "role": "customer" },
+    { "id": 4, "name": "Sarah Chen", "email": "s.chen@ironvault.org", "password": "titan123", "role": "customer" },
+    { "id": 5, "name": "Darius Thorne", "email": "d.thorne@ironstrength.com", "password": "titan123", "role": "customer" },
+    { "id": 6, "name": "Cassandra Cole", "email": "c.cole@apexfitness.org", "password": "titan123", "role": "customer" },
+    { "id": 7, "name": "Jordan Reyes", "email": "staff@titanathletics.io", "password": "staff123", "role": "employee" },
+    { "id": 8, "name": "Avery Stone", "email": "command@titanathletics.io", "password": "admin123", "role": "admin" }
+  ],
+  "memberships": [
+    { "id": 1, "userId": 1, "membershipCode": "ETF-89241", "plan": "Titan Pro Black", "registrationDate": "2026-01-15", "expirationDate": "2027-01-15", "status": "active" },
+    { "id": 2, "userId": 2, "membershipCode": "ETF-91044", "plan": "Titan Standard Iron", "registrationDate": "2025-11-15", "expirationDate": "2026-11-15", "status": "active" },
+    { "id": 3, "userId": 3, "membershipCode": "ETF-73412", "plan": "Titan Month-to-Month", "registrationDate": "2024-10-01", "expirationDate": "2025-10-01", "status": "expired" },
+    { "id": 4, "userId": 4, "membershipCode": "ETF-80192", "plan": "Titan Pro Black", "registrationDate": "2026-03-14", "expirationDate": "2027-03-14", "status": "active" },
+    { "id": 5, "userId": 5, "membershipCode": "ETF-55012", "plan": "Titan Standard Iron", "registrationDate": "2025-11-20", "expirationDate": "2026-11-20", "status": "active" },
+    { "id": 6, "userId": 6, "membershipCode": "ETF-10499", "plan": "Titan Month-to-Month", "registrationDate": "2025-04-01", "expirationDate": "2026-04-01", "status": "expired" }
+  ],
+  "branches": [
+    {
+      "id": 1,
+      "name": "Downtown Titanium Flagship",
+      "address": "108 Ironworks Blvd, Central Metro, NY 10001",
+      "image": "branch1-1.png",
+      "badge": "HQ Node 01",
+      "openingTime": "05:00",
+      "closingTime": "23:00",
+      "weekendOpeningTime": "06:00",
+      "weekendClosingTime": "21:00",
+      "is24Hours": false,
+      "capacityPercent": 68,
+      "amenities": [
+        { "icon": "fitness_center", "label": "Powerlifting Pods" },
+        { "icon": "sports_gymnastics", "label": "Olympic Platforms" },
+        { "icon": "ac_unit", "label": "Cold Plunge & Sauna" },
+        { "icon": "sprint", "label": "Turf Sprint Track" }
+      ],
+      "holidaySchedule": [
+        { "date": "2026-11-26", "name": "Thanksgiving Day", "type": "adjusted", "openingTime": "08:00", "closingTime": "16:00" },
+        { "date": "2026-12-25", "name": "Christmas Day", "type": "closed" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Northside Heavy Athletics",
+      "address": "454 Olympic Way, North District, NY 10024",
+      "image": "branch1-2.png",
+      "badge": "Branch 02",
+      "openingTime": "06:00",
+      "closingTime": "22:00",
+      "weekendOpeningTime": "06:00",
+      "weekendClosingTime": "22:00",
+      "is24Hours": false,
+      "capacityPercent": 42,
+      "amenities": [
+        { "icon": "weight", "label": "Free Weights up to 150lbs" },
+        { "icon": "precision_manufacturing", "label": "Hammer Strength Circuit" },
+        { "icon": "chair", "label": "Recovery Lounge" }
+      ],
+      "holidaySchedule": [
+        { "date": "2026-11-26", "name": "Thanksgiving Day", "type": "adjusted", "openingTime": "08:00", "closingTime": "18:00" },
+        { "date": "2026-12-25", "name": "Christmas Day", "type": "adjusted", "openingTime": "10:00", "closingTime": "16:00" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "West End Powerhouse",
+      "address": "780 Industrial Parkway, Westside, NY 10036",
+      "image": "branch1-3.png",
+      "badge": "Branch 03",
+      "openingTime": "05:00",
+      "closingTime": "23:00",
+      "weekendOpeningTime": "07:00",
+      "weekendClosingTime": "20:00",
+      "is24Hours": false,
+      "capacityPercent": 0,
+      "amenities": [
+        { "icon": "sports_mma", "label": "Combat Sparring Ring" },
+        { "icon": "hardware", "label": "Strongman Log & Stones" },
+        { "icon": "shower", "label": "Hydrotherapy Suite" }
+      ],
+      "holidaySchedule": [
+        { "date": "2026-11-11", "name": "Veterans Day Maintenance", "type": "closed" },
+        { "date": "2026-11-26", "name": "Thanksgiving Day", "type": "closed" },
+        { "date": "2026-12-25", "name": "Christmas Day", "type": "closed" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Metro Core District",
+      "address": "89 Velocity Ave, Financial Quarter, NY 10005",
+      "image": "branch1-4.png",
+      "badge": "Autonomous 04",
+      "openingTime": "00:00",
+      "closingTime": "23:59",
+      "weekendOpeningTime": "00:00",
+      "weekendClosingTime": "23:59",
+      "is24Hours": true,
+      "capacityPercent": 28,
+      "amenities": [
+        { "icon": "qr_code_scanner", "label": "Keyless Access" },
+        { "icon": "security", "label": "24/7 CCTV & Guard" },
+        { "icon": "bolt", "label": "Hi-Velocity Functional Rig" }
+      ],
+      "holidaySchedule": [
+        { "date": "2026-12-25", "name": "Christmas Day", "type": "regular" }
+      ]
+    }
+  ]
+}
+
