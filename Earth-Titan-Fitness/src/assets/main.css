@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+
+/* Your index.html uses class="dark", so keep dark: variants class-based */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ---------- Colors ---------- */
+  --color-outline-variant: #5e3f3b;
+  --color-on-tertiary-fixed: #1b1b1c;
+  --color-secondary-fixed-dim: #c7c6c6;
+  --color-outline: #af8782;
+  --color-on-error-container: #ffdad6;
+  --color-secondary: #c7c6c6;
+  --color-on-primary: #690003;
+  --color-primary-fixed: #ffdad5;
+  --color-on-secondary-fixed: #1a1c1c;
+  --color-on-primary-fixed: #410001;
+  --color-inverse-on-surface: #313030;
+  --color-surface: #131313;
+  --color-inverse-primary: #c0000c;
+  --color-on-tertiary-fixed-variant: #474746;
+  --color-surface-bright: #3a3939;
+  --color-surface-variant: #353534;
+  --color-tertiary: #c8c6c5;
+  --color-secondary-fixed: #e3e2e2;
+  --color-on-tertiary-container: #fbf8f8;
+  --color-primary: #ffb4aa;
+  --color-surface-container: #201f1f;
+  --color-on-primary-fixed-variant: #930007;
+  --color-error-container: #93000a;
+  --color-surface-container-low: #1c1b1b;
+  --color-on-secondary: #2f3131;
+  --color-primary-fixed-dim: #ffb4aa;
+  --color-surface-dim: #131313;
+  --color-background: #131313;
+  --color-on-surface-variant: #e9bcb6;
+  --color-error: #ffb4ab;
+  --color-tertiary-fixed-dim: #c8c6c5;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-tint: #ffb4aa;
+  --color-inverse-surface: #e5e2e1;
+  --color-on-surface: #e5e2e1;
+  --color-tertiary-container: #737272;
+  --color-secondary-container: #484949;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-tertiary-fixed: #e5e2e1;
+  --color-on-tertiary: #303030;
+  --color-on-primary-container: #fff7f6;
+  --color-on-error: #690005;
+  --color-on-background: #e5e2e1;
+  --color-primary-container: #e50914;
+  --color-on-secondary-fixed-variant: #464747;
+  --color-on-secondary-container: #b8b8b8;
+
+  /* ---------- Spacing (p-space-md, gap-gutter, px-margin ...) ---------- */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2rem;
+  --spacing-margin: 2rem;
+  --spacing-margin-mobile: 1rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-mobile: 1rem;
+
+  /* ---------- Border radius ---------- */
+  --radius: 0.125rem;
+  --radius-sm: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+
+  /* ---------- Font families (font-label-caps ...) ---------- */
+  --font-body-sm-bold: 'Inter', sans-serif;
+  --font-body-sm: 'Inter', sans-serif;
+  --font-body-base: 'Inter', sans-serif;
+  --font-body-lg: 'Inter', sans-serif;
+  --font-body-bold: 'Inter', sans-serif;
+  --font-label-sm: 'Inter', sans-serif;
+  --font-display-lg: 'Oswald', sans-serif;
+  --font-display-lg-mobile: 'Oswald', sans-serif;
+  --font-headline-lg: 'Oswald', sans-serif;
+  --font-headline-lg-mobile: 'Oswald', sans-serif;
+  --font-headline-md: 'Oswald', sans-serif;
+  --font-headline-sm: 'Oswald', sans-serif;
+  --font-stat-xl: 'Oswald', sans-serif;
+  --font-stat-lg: 'Oswald', sans-serif;
+  --font-label-caps: 'Oswald', sans-serif;
+
+  /* ---------- Font sizes (text-label-caps ...) ---------- */
+  --text-body-sm-bold: 14px;
+  --text-body-sm-bold--line-height: 20px;
+  --text-body-sm-bold--letter-spacing: 0;
+  --text-body-sm-bold--font-weight: 600;
+
+  --text-display-lg: 48px;
+  --text-display-lg--line-height: 56px;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--letter-spacing: 0.02em;
+  --text-label-sm--font-weight: 500;
+
+  --text-body-base: 16px;
+  --text-body-base--line-height: 24px;
+  --text-body-base--letter-spacing: 0;
+  --text-body-base--font-weight: 400;
+
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--letter-spacing: 0;
+  --text-headline-sm--font-weight: 600;
+
+  --text-stat-lg: 32px;
+  --text-stat-lg--line-height: 40px;
+  --text-stat-lg--letter-spacing: -0.02em;
+  --text-stat-lg--font-weight: 700;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--letter-spacing: 0;
+  --text-body-lg--font-weight: 400;
+
+  --text-display-lg-mobile: 32px;
+  --text-display-lg-mobile--line-height: 40px;
+  --text-display-lg-mobile--letter-spacing: -0.01em;
+  --text-display-lg-mobile--font-weight: 700;
+
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.06em;
+  --text-label-caps--font-weight: 700;
+
+  --text-stat-xl: 40px;
+  --text-stat-xl--line-height: 48px;
+  --text-stat-xl--letter-spacing: -0.02em;
+  --text-stat-xl--font-weight: 700;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--letter-spacing: 0;
+  --text-body-sm--font-weight: 400;
+
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+
+  --text-headline-lg-mobile: 26px;
+  --text-headline-lg-mobile--line-height: 32px;
+  --text-headline-lg-mobile--letter-spacing: -0.01em;
+  --text-headline-lg-mobile--font-weight: 700;
+
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 700;
+
+  --text-body-bold: 16px;
+  --text-body-bold--line-height: 24px;
+  --text-body-bold--letter-spacing: 0;
+  --text-body-bold--font-weight: 600;
+}
+
+/* Global resets (these were a <style> block at the bottom of every page) */
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    overscroll-behavior: none;
+  }
+
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

@@ -40,7 +40,7 @@ export async function http<T>(
     })
   } catch {
     // fetch only rejects on network failure (server down, CORS, offline)
-    throw new ApiError('Cannot reach the server. Is `npm run api` running?', 0)
+    throw new ApiError('Cannot reach the server.', 0)
   }
 
   if (!response.ok) {
