@@ -2,10 +2,10 @@
 import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import branch6 from '@/assets/branch1-6.png'
-import heavyCalibrationIron from '@/assets/heavyCalibrationIron.png'
-import reinforceChalkDeck from '@/assets/reinforceChalkDeck.png'
-import cleanFuelNutritionDeport from '@/assets/cleanFuelNutritionDeport.png'
+import branch6 from '@/images/branch1-6.png'
+import heavyCalibrationIron from '@/images/heavyCalibrationIron.png'
+import reinforceChalkDeck from '@/images/reinforceChalkDeck.png'
+import cleanFuelNutritionDeport from '@/images/cleanFuelNutritionDeport.png'
 
 const heroBg = branch6
 

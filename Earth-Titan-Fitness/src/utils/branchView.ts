@@ -1,11 +1,11 @@
 import type { GymBranch, HolidayEntry } from '@/types/api'
 import { formatDate, todayIso } from './membership'
-import branch1 from '@/assets/branch1-1.png'
-import branch2 from '@/assets/branch1-2.png'
-import branch3 from '@/assets/branch1-3.png'
-import branch4 from '@/assets/branch1-4.png'
-import branch5 from '@/assets/branch1-5.png'
-import branch6 from '@/assets/branch1-6.png'
+import branch1 from '@/images/branch1-1.png'
+import branch2 from '@/images/branch1-2.png'
+import branch3 from '@/images/branch1-3.png'
+import branch4 from '@/images/branch1-4.png'
+import branch5 from '@/images/branch1-5.png'
+import branch6 from '@/images/branch1-6.png'
 
 // db.json stores only the file name; the bundler needs real imports.
 const images: Record<string, string> = {

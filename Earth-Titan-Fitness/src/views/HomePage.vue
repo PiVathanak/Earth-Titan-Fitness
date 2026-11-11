@@ -3,10 +3,10 @@ import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import branch1 from '@/assets/branch1-1.png'
-import branch2 from '@/assets/branch1-2.png'
-import branch3 from '@/assets/branch1-3.png'
-import branch4 from '@/assets/branch1-4.png'
+import branch1 from '@/images/branch1-1.png'
+import branch2 from '@/images/branch1-2.png'
+import branch3 from '@/images/branch1-3.png'
+import branch4 from '@/images/branch1-4.png'
 
 const heroBg = branch4
 

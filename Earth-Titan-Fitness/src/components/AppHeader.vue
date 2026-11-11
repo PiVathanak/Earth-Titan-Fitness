@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
-import logoUrl from '@/assets/logo.png'
+import logoUrl from '@/images/logo.png'
 import { homeForRole, useAuthStore } from '@/stores/auth'
 
 // "active" decides which nav item is highlighted, e.g. <AppHeader active="about" />

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import logoUrl from '@/assets/logo.png'
+import logoUrl from '@/images/logo.png'
 import BranchOverview from '@/components/admin/BranchOverview.vue'
 import EmployeeOverview from '@/components/admin/EmployeeOverview.vue'
 import MemberOverview from '@/components/admin/MemberOverview.vue'
