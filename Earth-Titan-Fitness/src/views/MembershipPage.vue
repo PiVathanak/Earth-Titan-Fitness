@@ -280,11 +280,11 @@ function copyId() {
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
             <!-- Digital Titan Card (7 Cols) -->
             <div
-              class="lg:col-span-7 flex flex-col justify-between relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-lg md:p-space-xl shadow-xl min-h-[380px]"
+              class="lg:col-span-7 flex flex-col justify-between relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-lg md:p-space-xl shadow-xl min-h-95"
             >
               <!-- Decorative Carbon Fiber & Brushed Accent Layer -->
               <div
-                class="absolute inset-0 opacity-15 pointer-events-none bg-gradient-to-tr from-surface-container-lowest via-surface-container-highest to-surface-container-lowest"
+                class="absolute inset-0 opacity-15 pointer-events-none bg-linear-to-tr from-surface-container-lowest via-surface-container-highest to-surface-container-lowest"
                 style="
                   background-image: radial-gradient(#353534 1px, transparent 1px);
                   background-size: 8px 8px;
@@ -297,7 +297,7 @@ function copyId() {
                 class="absolute -bottom-10 left-1/4 w-96 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"
               ></div>
               <div
-                class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-container via-surface-tint to-primary-container"
+                class="absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r from-primary-container via-surface-tint to-primary-container"
               ></div>
 
               <!-- Card Top Bar -->
@@ -474,7 +474,7 @@ function copyId() {
                 <!-- Capacity / Progress Track -->
                 <div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden p-0.5">
                   <div
-                    class="bg-gradient-to-r from-primary to-primary-container h-full rounded-full transition-all duration-500"
+                    class="bg-linear-to-r from-primary to-primary-container h-full rounded-full transition-all duration-500"
                     :style="{ width: cycleChronometer.progressPercent + '%' }"
                   ></div>
                 </div>

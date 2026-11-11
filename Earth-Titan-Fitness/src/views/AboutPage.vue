@@ -164,7 +164,7 @@ const standards = [
             :style="heroBg ? { backgroundImage: `url('${heroBg}')` } : {}"
           ></div>
           <div
-            class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface-container-lowest/70 pointer-events-none"
+            class="absolute inset-0 bg-linear-to-t from-surface via-surface/85 to-surface-container-lowest/70 pointer-events-none"
           ></div>
 
           <div
@@ -189,7 +189,7 @@ const standards = [
             >
               FORGED IN IRON. <br class="hidden sm:block" />
               <span
-                class="text-primary-container text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-primary"
+                class="text-transparent bg-clip-text bg-linear-to-r from-primary-container to-primary"
               >
                 BUILT FOR PEAK
               </span>
@@ -315,7 +315,7 @@ const standards = [
                   :alt="item.alt"
                 />
                 <div
-                  class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"
+                  class="absolute inset-0 bg-linear-to-t from-surface-container-lowest via-transparent to-transparent"
                 ></div>
                 <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                   <span class="font-headline-sm text-headline-sm uppercase text-on-surface">{{

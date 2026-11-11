@@ -202,7 +202,7 @@ const benefits = [
             :style="heroBg ? { backgroundImage: `url('${heroBg}')` } : {}"
           ></div>
           <div
-            class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface-container-lowest/70 pointer-events-none"
+            class="absolute inset-0 bg-linear-to-t from-surface via-surface/85 to-surface-container-lowest/70 pointer-events-none"
           ></div>
 
           <div class="relative max-w-7xl mx-auto px-margin-mobile lg:px-margin z-10">
@@ -397,7 +397,7 @@ const benefits = [
                     :alt="b.alt"
                   />
                   <div
-                    class="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/20 to-transparent"
+                    class="absolute inset-0 bg-linear-to-t from-surface-container via-surface-container/20 to-transparent"
                   ></div>
                   <div class="absolute top-space-md left-space-md">
                     <span

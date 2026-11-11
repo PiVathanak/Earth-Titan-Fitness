@@ -67,7 +67,7 @@ const notFound = computed(() => store.currentStatus === 'error' && store.current
               :class="branch.imageClass"
               :style="branch.image ? { backgroundImage: `url('${branch.image}')` } : {}"
             ></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-surface via-surface/40 to-transparent"></div>
             <span
               class="absolute top-4 left-4 px-4 py-1 rounded-full font-label-caps uppercase flex items-center gap-1.5 text-sm"
               :class="branch.statusClass"

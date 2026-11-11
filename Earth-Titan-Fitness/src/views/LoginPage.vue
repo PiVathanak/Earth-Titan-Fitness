@@ -153,7 +153,7 @@ function deskSupport() {
         >
           <!-- Background glows -->
           <div
-            class="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-primary-container/10 blur-[130px] pointer-events-none rounded-full"
+            class="absolute -top-24 left-1/2 -translate-x-1/2 w-180 h-90 bg-primary-container/10 blur-[130px] pointer-events-none rounded-full"
           ></div>
           <div
             class="absolute top-1/3 -right-24 w-80 h-80 bg-primary-container/5 blur-[100px] pointer-events-none rounded-full"
@@ -164,7 +164,7 @@ function deskSupport() {
               class="w-full max-w-lg bg-surface-container-low rounded-xl shadow-2xl p-6 sm:p-10 relative overflow-hidden"
             >
               <div
-                class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-container to-transparent"
+                class="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-primary-container to-transparent"
               ></div>
 
               <!-- Brand -->

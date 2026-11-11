@@ -156,7 +156,7 @@ const filteredBranches = computed(() => {
             class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg"
             aria-busy="true"
           >
-            <div v-for="n in 4" :key="n" class="h-[32rem] rounded-xl bg-surface-container animate-pulse"></div>
+            <div v-for="n in 4" :key="n" class="h-128 rounded-xl bg-surface-container animate-pulse"></div>
             <p class="lg:col-span-2 text-center text-secondary">Loading branches…</p>
           </div>
 
@@ -200,7 +200,7 @@ const filteredBranches = computed(() => {
                   :style="b.image ? { backgroundImage: `url('${b.image}')` } : {}"
                 ></div>
                 <div
-                  class="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/40 to-transparent"
+                  class="absolute inset-0 bg-linear-to-t from-surface-container via-surface-container/40 to-transparent"
                 ></div>
                 <div class="absolute top-4 left-4 flex items-center gap-2">
                   <span
@@ -359,7 +359,7 @@ const filteredBranches = computed(() => {
                 :style="mapBg ? { backgroundImage: `url('${mapBg}')` } : {}"
               >
                 <div
-                  class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/30 to-transparent"
+                  class="absolute inset-0 bg-linear-to-t from-surface-container-lowest via-surface-container-lowest/30 to-transparent"
                 ></div>
                 <div
                   class="relative z-10 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-surface-container-lowest/90 backdrop-blur-md p-space-md rounded-lg"
