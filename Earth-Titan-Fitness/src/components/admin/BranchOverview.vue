@@ -155,7 +155,6 @@ async function toggleBranchTodayStatus(branch: GymBranch, currentlyOpen: boolean
         <div class="branch-card__content">
           <div class="branch-card__meta">
             <span class="branch-number">BRANCH {{ raw.id }} · {{ raw.badge }}</span>
-            <span class="capacity-tag">{{ raw.capacityPercent }}% LOAD</span>
           </div>
           <h4>{{ raw.name }}</h4>
           <p class="branch-address">{{ raw.address }}</p>

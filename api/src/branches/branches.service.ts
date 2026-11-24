@@ -20,7 +20,6 @@ const INITIAL_BRANCHES: GymBranch[] = [
     weekendOpeningTime: '06:00',
     weekendClosingTime: '21:00',
     is24Hours: false,
-    capacityPercent: 68,
     amenities: [
       { icon: 'fitness_center', label: 'Powerlifting Pods' },
       { icon: 'sports_gymnastics', label: 'Olympic Platforms' },
@@ -49,7 +48,6 @@ const INITIAL_BRANCHES: GymBranch[] = [
     weekendOpeningTime: '06:00',
     weekendClosingTime: '22:00',
     is24Hours: false,
-    capacityPercent: 42,
     amenities: [
       { icon: 'weight', label: 'Free Weights up to 150lbs' },
       { icon: 'precision_manufacturing', label: 'Hammer Strength Circuit' },
@@ -83,7 +81,6 @@ const INITIAL_BRANCHES: GymBranch[] = [
     weekendOpeningTime: '07:00',
     weekendClosingTime: '20:00',
     is24Hours: false,
-    capacityPercent: 0,
     amenities: [
       { icon: 'sports_mma', label: 'Combat Sparring Ring' },
       { icon: 'hardware', label: 'Strongman Log & Stones' },
@@ -110,7 +107,6 @@ const INITIAL_BRANCHES: GymBranch[] = [
     weekendOpeningTime: '00:00',
     weekendClosingTime: '23:59',
     is24Hours: true,
-    capacityPercent: 28,
     amenities: [
       { icon: 'qr_code_scanner', label: 'Keyless Access' },
       { icon: 'security', label: '24/7 CCTV & Guard' },
@@ -174,7 +170,6 @@ export class BranchesService {
       weekendOpeningTime: dto.weekendOpeningTime,
       weekendClosingTime: dto.weekendClosingTime,
       is24Hours: dto.is24Hours,
-      capacityPercent: dto.capacityPercent,
       amenities: structuredClone(dto.amenities ?? []),
       holidaySchedule: structuredClone(dto.holidaySchedule ?? []),
     };
@@ -212,9 +207,6 @@ export class BranchesService {
         ? { weekendClosingTime: dto.weekendClosingTime }
         : {}),
       ...(dto.is24Hours !== undefined ? { is24Hours: dto.is24Hours } : {}),
-      ...(dto.capacityPercent !== undefined
-        ? { capacityPercent: dto.capacityPercent }
-        : {}),
       ...(dto.amenities !== undefined
         ? { amenities: structuredClone(dto.amenities) }
         : {}),

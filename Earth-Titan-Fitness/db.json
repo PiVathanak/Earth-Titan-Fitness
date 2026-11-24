@@ -29,7 +29,6 @@
       "weekendOpeningTime": "06:00",
       "weekendClosingTime": "21:00",
       "is24Hours": false,
-      "capacityPercent": 68,
       "amenities": [
         { "icon": "fitness_center", "label": "Powerlifting Pods" },
         { "icon": "sports_gymnastics", "label": "Olympic Platforms" },
@@ -52,7 +51,6 @@
       "weekendOpeningTime": "06:00",
       "weekendClosingTime": "22:00",
       "is24Hours": false,
-      "capacityPercent": 42,
       "amenities": [
         { "icon": "weight", "label": "Free Weights up to 150lbs" },
         { "icon": "precision_manufacturing", "label": "Hammer Strength Circuit" },
@@ -74,7 +72,6 @@
       "weekendOpeningTime": "07:00",
       "weekendClosingTime": "20:00",
       "is24Hours": false,
-      "capacityPercent": 0,
       "amenities": [
         { "icon": "sports_mma", "label": "Combat Sparring Ring" },
         { "icon": "hardware", "label": "Strongman Log & Stones" },
@@ -97,7 +94,6 @@
       "weekendOpeningTime": "00:00",
       "weekendClosingTime": "23:59",
       "is24Hours": true,
-      "capacityPercent": 28,
       "amenities": [
         { "icon": "qr_code_scanner", "label": "Keyless Access" },
         { "icon": "security", "label": "24/7 CCTV & Guard" },
@@ -109,4 +105,3 @@
     }
   ]
 }
-

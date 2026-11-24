@@ -66,11 +66,6 @@ export interface BranchCard {
   holidaySub: string
   upcomingHolidays: HolidayEntry[]
   amenities: GymBranch['amenities']
-  loadIcon: string
-  loadText: string
-  loadTextClass: string
-  loadBarClass: string
-  loadWidth: string
 }
 
 function toMinutes(hhmm: string): number {
@@ -153,11 +148,6 @@ export function toBranchCard(branch: GymBranch, now = new Date()): BranchCard {
     holidaySub: next ? `${next.name} · ${formatDate(next.date)}` : 'No upcoming holidays',
     upcomingHolidays: upcoming,
     amenities: branch.amenities,
-    loadIcon: isOpen ? 'speed' : 'lock_clock',
-    loadText: isOpen ? `${branch.capacityPercent}% Capacity` : 'Facility Offline',
-    loadTextClass: isOpen ? 'text-on-surface' : 'text-secondary',
-    loadBarClass: isOpen ? 'bg-emerald-500' : 'bg-secondary-container',
-    loadWidth: isOpen ? `${branch.capacityPercent}%` : '0%',
   }
 }
 

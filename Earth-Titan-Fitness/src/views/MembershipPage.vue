@@ -83,7 +83,6 @@ const branches: BranchAccess[] = [
     type: 'primary',
     typeLabel: 'Primary Enrolled Facility',
     address: '450 Titanium Way, Suite 100 • Olympic Rig & Cryo Lab',
-    capacityPercent: 48,
     isActive: true,
   },
   {
@@ -91,7 +90,6 @@ const branches: BranchAccess[] = [
     type: 'regional',
     typeLabel: 'Regional Campus',
     address: '882 Foundry Boulevard • Strongman Compound & Sled Runs',
-    capacityPercent: 32,
     isActive: true,
   },
   {
@@ -99,7 +97,6 @@ const branches: BranchAccess[] = [
     type: 'regional',
     typeLabel: 'Regional Campus',
     address: '104 Spartan Avenue • High-Velocity Turf & Sprint Track',
-    capacityPercent: 61,
     isActive: true,
   },
   {
@@ -107,7 +104,6 @@ const branches: BranchAccess[] = [
     type: 'regional',
     typeLabel: 'Regional Campus',
     address: '200 Central Plaza, B2 • Hyperbaric Recovery & Calisthenics',
-    capacityPercent: 74,
     isActive: true,
   },
   {
@@ -115,7 +111,6 @@ const branches: BranchAccess[] = [
     type: 'regional',
     typeLabel: 'Regional Campus',
     address: '1904 Industrial Road • Monolifts, Calibrated Plates & Outdoor Strongman Field',
-    capacityPercent: 29,
     isActive: true,
   },
 ]
@@ -563,7 +558,7 @@ function copyId() {
                       class="flex items-center gap-2 pt-1 font-label-caps text-label-caps text-secondary uppercase"
                     >
                       <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                      <span>Current Density: {{ branch.capacityPercent }}% Capacity</span>
+                      <span>Unlimited Network Access</span>
                     </div>
                   </div>
                   <span class="p-1 rounded-full bg-surface-container text-emerald-400">

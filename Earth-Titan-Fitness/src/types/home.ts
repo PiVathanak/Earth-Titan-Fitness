@@ -32,17 +32,7 @@ export interface Branch {
   hoursLabel: string
   hours: string
   hoursClass: string
-  loadText: string
-  loadTextClass: string
-  loadBarClass: string
-  loadWidth: string
   tags: string[]
-}
-
-export interface LoadBreakdown {
-  label: string
-  pct: string
-  barClass: string
 }
 
 export interface Benefit {

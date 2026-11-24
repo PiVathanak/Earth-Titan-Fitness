@@ -44,7 +44,6 @@ erDiagram
         string weekend_opening_time "HH:mm"
         string weekend_closing_time "HH:mm"
         boolean is_24_hours
-        int capacity_percent "0..100"
     }
 
     HOLIDAY_SCHEDULE {
@@ -101,7 +100,6 @@ erDiagram
 |     weekend_opening (VARCHAR) |                            +-------------------------------+
 |     weekend_closing (VARCHAR) |
 |     is_24_hours     (BOOLEAN) |
-|     capacity_percent    (INT) |
 +-------------------------------+
                 |
                 | 1 : N

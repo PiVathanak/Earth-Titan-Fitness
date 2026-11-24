@@ -39,7 +39,6 @@ Content-Type: application/json
   "weekendOpeningTime": "07:00",
   "weekendClosingTime": "20:00",
   "is24Hours": false,
-  "capacityPercent": 50,
   "amenities": [
     { "icon": "fitness_center", "label": "Monolift Station" }
   ],
@@ -65,8 +64,7 @@ Content-Type: application/json
   "closingTime": "22:00",
   "weekendOpeningTime": "07:00",
   "weekendClosingTime": "20:00",
-  "is24Hours": false,
-  "capacityPercent": 10
+  "is24Hours": false
 }
 
 ### 8. Create Branch — DTO Validation Errors (400 Bad Request)
@@ -81,7 +79,6 @@ Content-Type: application/json
   "weekendOpeningTime": "06:00",
   "weekendClosingTime": "20:00",
   "is24Hours": false,
-  "capacityPercent": 150,
   "extraField": "not allowed"
 }
 
@@ -96,8 +93,7 @@ Content-Type: application/json
   "closingTime": "06:00",
   "weekendOpeningTime": "07:00",
   "weekendClosingTime": "20:00",
-  "is24Hours": false,
-  "capacityPercent": 10
+  "is24Hours": false
 }
 
 ### 10. Update Branch — Partial Update (200 OK)
@@ -105,7 +101,7 @@ PATCH {{baseUrl}}/branches/2
 Content-Type: application/json
 
 {
-  "capacityPercent": 75,
+  "badge": "Branch 02 Elite",
   "closingTime": "23:00"
 }
 

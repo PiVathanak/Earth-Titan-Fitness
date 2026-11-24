@@ -101,10 +101,6 @@ const branches = [
     hoursLabel: 'Operating Shift',
     hours: '05:00 - 23:00',
     hoursClass: 'text-on-surface',
-    loadText: '78% DENSITY',
-    loadTextClass: 'text-amber-400 font-bold',
-    loadBarClass: 'bg-amber-400',
-    loadWidth: '78%',
     tags: ['Eleiko Certified', 'Cryo Sauna', '12 Racks'],
   },
   {
@@ -120,10 +116,6 @@ const branches = [
     hoursLabel: 'Operating Shift',
     hours: '06:00 - 22:00',
     hoursClass: 'text-on-surface',
-    loadText: '42% OPTIMAL',
-    loadTextClass: 'text-emerald-400 font-bold',
-    loadBarClass: 'bg-emerald-500',
-    loadWidth: '42%',
     tags: ['Turf Sprint Track', 'Olympic Bars', 'Steam Lab'],
   },
   {
@@ -139,10 +131,6 @@ const branches = [
     hoursLabel: 'Holiday Override',
     hours: '07:00 - 18:00',
     hoursClass: 'text-amber-400 font-bold',
-    loadText: '91% SURGE',
-    loadTextClass: 'text-primary-container font-bold',
-    loadBarClass: 'bg-primary-container',
-    loadWidth: '91%',
     tags: ['Rapid Lockers', 'Recovery Booths', 'Heavy Dumbbells'],
   },
 ]
@@ -150,12 +138,6 @@ const branches = [
 const visibleBranches = computed(() =>
   filter.value === 'open' ? branches.filter((b) => b.status === 'open') : branches,
 )
-
-const loadBreakdown = [
-  { label: 'Free Weights & Cages', pct: '84%', barClass: 'bg-primary-container' },
-  { label: 'Conditioning & Turf', pct: '35%', barClass: 'bg-emerald-500' },
-  { label: 'Saunas & Cryo Vaults', pct: '62%', barClass: 'bg-amber-400' },
-]
 
 const benefits = [
   {
@@ -438,25 +420,10 @@ const benefits = [
                       class="bg-surface-container-low p-space-md rounded-lg mb-space-md shadow-inner"
                     >
                       <div
-                        class="flex items-center justify-between text-secondary font-label-caps text-label-caps uppercase mb-1"
+                        class="flex items-center justify-between text-secondary font-label-caps text-label-caps uppercase"
                       >
                         <span>{{ b.hoursLabel }}</span>
                         <span :class="b.hoursClass">{{ b.hours }}</span>
-                      </div>
-                      <div
-                        class="flex items-center justify-between text-secondary font-label-caps text-label-caps uppercase mb-space-sm"
-                      >
-                        <span>Peak Hours Meter</span>
-                        <span :class="b.loadTextClass">{{ b.loadText }}</span>
-                      </div>
-                      <div
-                        class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden"
-                      >
-                        <div
-                          class="h-full rounded-full"
-                          :class="b.loadBarClass"
-                          :style="{ width: b.loadWidth }"
-                        ></div>
                       </div>
                     </div>
                     <div class="flex flex-wrap gap-space-xs mb-space-lg">
@@ -500,66 +467,6 @@ const benefits = [
                 <span>Explore All 5 Branches &amp; Maps</span>
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
               </RouterLink>
-            </div>
-          </div>
-        </section>
-
-        <!-- Congestion telemetry -->
-        <section class="py-space-xl bg-surface">
-          <div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin">
-            <div
-              class="bg-surface-container p-space-lg lg:p-space-xl rounded-xl shadow-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-xl"
-            >
-              <div class="max-w-xl">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface uppercase mb-space-sm">
-                  Titan Congestion Telemetry
-                </h2>
-                <p class="font-body-base text-body-base text-secondary mb-space-md">
-                  Review current facility utilization across lifting platforms, conditioning zones,
-                  and recovery areas before planning your training session.
-                </p>
-                <div
-                  class="flex items-center gap-space-xl text-on-surface font-label-caps text-label-caps uppercase"
-                >
-                  <div>
-                    <span class="block text-secondary text-label-sm">Optimal Window</span>
-                    <span class="text-on-surface font-stat-lg text-stat-lg">11:30 - 14:00</span>
-                  </div>
-                  <div>
-                    <span class="block text-secondary text-label-sm">Peak Inflow</span>
-                    <span class="text-primary-container font-stat-lg text-stat-lg"
-                      >17:30 - 20:00</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="w-full lg:w-96 bg-surface-container-low p-space-md rounded-xl shadow-inner"
-              >
-                <div class="flex items-center justify-between pb-space-sm mb-space-sm">
-                  <span class="font-headline-sm text-headline-sm uppercase text-on-surface"
-                    >Facility Load Breakdown</span
-                  >
-                </div>
-                <div class="space-y-space-md">
-                  <div v-for="row in loadBreakdown" :key="row.label">
-                    <div
-                      class="flex justify-between font-label-caps text-label-caps uppercase text-secondary mb-1"
-                    >
-                      <span>{{ row.label }}</span>
-                      <span class="text-on-surface">{{ row.pct }} Capacity</span>
-                    </div>
-                    <div class="w-full h-1.5 rounded-full bg-surface-container-highest">
-                      <div
-                        class="h-full rounded-full"
-                        :class="row.barClass"
-                        :style="{ width: row.pct }"
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>

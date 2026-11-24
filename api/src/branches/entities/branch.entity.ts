@@ -24,7 +24,6 @@ export interface GymBranch {
   weekendOpeningTime: string; // HH:mm (Sat–Sun)
   weekendClosingTime: string; // HH:mm (Sat–Sun)
   is24Hours: boolean;
-  capacityPercent: number;
   amenities: Amenity[];
   holidaySchedule: HolidayEntry[];
 }

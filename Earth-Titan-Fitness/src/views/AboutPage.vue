@@ -396,35 +396,6 @@ const standards = [
                   </p>
                 </div>
               </div>
-
-              <div
-                class="mt-space-xl p-space-md bg-surface-container-lowest rounded-sm flex flex-col md:flex-row items-center justify-between gap-space-md"
-              >
-                <div class="flex items-center gap-space-md">
-                  <span class="material-symbols-outlined text-primary-container text-[28px]"
-                    >speed</span
-                  >
-                  <div>
-                    <span class="font-label-caps text-label-caps uppercase text-on-surface block"
-                      >Dynamic Rack Capacity Index</span
-                    >
-                    <span class="font-body-sm text-body-sm text-secondary"
-                      >Monitored live across Sectors Alpha through Echo</span
-                    >
-                  </div>
-                </div>
-                <div class="flex items-center gap-space-lg w-full md:w-auto justify-end">
-                  <div class="flex flex-col items-end">
-                    <span class="font-label-caps text-label-caps text-secondary">Current Load</span>
-                    <span class="font-headline-sm text-headline-sm text-primary-container"
-                      >58% Nominal</span
-                    >
-                  </div>
-                  <div class="w-32 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
-                    <div class="bg-emerald-500 h-full w-[58%]"></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>

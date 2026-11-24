@@ -89,7 +89,9 @@ const notFound = computed(() => store.currentStatus === 'error' && store.current
             <section class="bg-surface-container p-5 rounded-xl">
               <h2 class="font-label-caps uppercase text-secondary text-sm">Today</h2>
               <p class="text-2xl font-bold mt-1">{{ branch.todayHours }}</p>
-              <p class="text-secondary text-sm mt-1">{{ branch.loadText }}</p>
+              <p class="text-secondary text-sm mt-1">
+                {{ branch.isOpen ? 'Open for training' : 'Facility currently closed' }}
+              </p>
             </section>
             <section class="bg-surface-container p-5 rounded-xl">
               <h2 class="font-label-caps uppercase text-secondary text-sm">Regular schedule</h2>

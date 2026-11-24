@@ -268,7 +268,7 @@ const filteredBranches = computed(() => {
                   <div>
                     <span
                       class="font-label-caps text-label-caps uppercase text-secondary block mb-2"
-                      >Facility Load &amp; Amenity Matrix</span
+                      >Facility Amenities</span
                     >
                     <div class="flex flex-wrap gap-1.5">
                       <span
@@ -281,27 +281,6 @@ const filteredBranches = computed(() => {
                         }}</span>
                         {{ a.label }}
                       </span>
-                    </div>
-                  </div>
-
-                  <div class="bg-surface-container-lowest p-space-md rounded-lg">
-                    <div class="flex items-center justify-between text-secondary mb-1.5">
-                      <span
-                        class="font-label-caps text-label-caps uppercase flex items-center gap-1"
-                      >
-                        <span class="material-symbols-outlined text-sm">{{ b.loadIcon }}</span> Live
-                        Capacity Load
-                      </span>
-                      <span class="font-body-sm-bold text-body-sm-bold" :class="b.loadTextClass">{{
-                        b.loadText
-                      }}</span>
-                    </div>
-                    <div class="w-full h-2 rounded bg-surface-container-high overflow-hidden">
-                      <div
-                        class="h-full rounded transition-all duration-500"
-                        :class="b.loadBarClass"
-                        :style="{ width: b.loadWidth }"
-                      ></div>
                     </div>
                   </div>
                 </div>

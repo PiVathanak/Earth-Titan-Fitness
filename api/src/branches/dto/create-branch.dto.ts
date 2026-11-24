@@ -4,15 +4,12 @@ import {
   IsArray,
   IsBoolean,
   IsIn,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   Length,
   Matches,
-  Max,
   MaxLength,
-  Min,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
@@ -116,11 +113,6 @@ export class CreateBranchDto {
 
   @IsBoolean()
   is24Hours: boolean;
-
-  @IsInt()
-  @Min(0)
-  @Max(100)
-  capacityPercent: number;
 
   @IsOptional()
   @IsArray()

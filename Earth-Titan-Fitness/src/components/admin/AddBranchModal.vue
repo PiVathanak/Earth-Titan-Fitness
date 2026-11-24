@@ -29,7 +29,6 @@ interface BranchFormState {
   closingTime: string
   weekendOpeningTime: string
   weekendClosingTime: string
-  capacityPercent: number
   amenities: Amenity[]
   holidaySchedule: HolidayEntry[]
 }
@@ -44,7 +43,6 @@ const emptyForm = (): BranchFormState => ({
   closingTime: '23:00',
   weekendOpeningTime: '06:00',
   weekendClosingTime: '21:00',
-  capacityPercent: 45,
   amenities: [
     { icon: 'fitness_center', label: 'Powerlifting Pods' },
     { icon: 'sports_gymnastics', label: 'Olympic Platforms' },
@@ -59,7 +57,6 @@ const touched = reactive({
   badge: false,
   weekdayHours: false,
   weekendHours: false,
-  capacityPercent: false,
 })
 const submitted = ref(false)
 
@@ -79,7 +76,6 @@ watch(
           closingTime: b.closingTime,
           weekendOpeningTime: b.weekendOpeningTime,
           weekendClosingTime: b.weekendClosingTime,
-          capacityPercent: b.capacityPercent,
           amenities: b.amenities.map((a) => ({ ...a })),
           holidaySchedule: b.holidaySchedule.map((h) => ({ ...h })),
         }
@@ -94,7 +90,6 @@ watch(
     form.closingTime = source.closingTime
     form.weekendOpeningTime = source.weekendOpeningTime
     form.weekendClosingTime = source.weekendClosingTime
-    form.capacityPercent = source.capacityPercent
     form.amenities = source.amenities
     form.holidaySchedule = source.holidaySchedule
 
@@ -103,7 +98,6 @@ watch(
     touched.badge = false
     touched.weekdayHours = false
     touched.weekendHours = false
-    touched.capacityPercent = false
     submitted.value = false
   },
 )
@@ -174,7 +168,6 @@ const errors = computed(() => {
     badge: '',
     weekdayHours: '',
     weekendHours: '',
-    capacityPercent: '',
     holidays: '',
   }
 
@@ -204,14 +197,6 @@ const errors = computed(() => {
     } else if (form.weekendClosingTime <= form.weekendOpeningTime) {
       e.weekendHours = 'Weekend closing time must be after opening time.'
     }
-  }
-
-  if (
-    !Number.isInteger(Number(form.capacityPercent)) ||
-    form.capacityPercent < 0 ||
-    form.capacityPercent > 100
-  ) {
-    e.capacityPercent = 'Capacity must be a whole number between 0 and 100.'
   }
 
   for (const h of form.holidaySchedule) {
@@ -247,7 +232,6 @@ function submit() {
     weekendOpeningTime: form.is24Hours ? '00:00' : form.weekendOpeningTime,
     weekendClosingTime: form.is24Hours ? '23:59' : form.weekendClosingTime,
     is24Hours: form.is24Hours,
-    capacityPercent: Number(form.capacityPercent),
     amenities: form.amenities.map((a) => ({ icon: a.icon, label: a.label })),
     holidaySchedule: form.holidaySchedule.map((h) => ({
       date: h.date,
@@ -309,28 +293,15 @@ function submit() {
           <small v-if="show('address')" class="error">{{ errors.address }}</small>
         </label>
 
-        <!-- Image selector with live preview & Capacity -->
-        <div class="form-grid form-grid--2-1">
-          <label>
-            Facility Image
-            <select v-model="form.image">
-              <option v-for="img in BRANCH_IMAGE_OPTIONS" :key="img.value" :value="img.value">
-                {{ img.label }}
-              </option>
-            </select>
-          </label>
-          <label :class="{ invalid: show('capacityPercent') }">
-            Initial Capacity (%)
-            <input
-              v-model.number="form.capacityPercent"
-              type="number"
-              min="0"
-              max="100"
-              @blur="touched.capacityPercent = true"
-            />
-            <small v-if="show('capacityPercent')" class="error">{{ errors.capacityPercent }}</small>
-          </label>
-        </div>
+        <!-- Image selector with live preview -->
+        <label>
+          Facility Image
+          <select v-model="form.image">
+            <option v-for="img in BRANCH_IMAGE_OPTIONS" :key="img.value" :value="img.value">
+              {{ img.label }}
+            </option>
+          </select>
+        </label>
 
         <div class="image-preview">
           <img :src="previewImageUrl" :alt="form.name || 'Selected branch preview'" />

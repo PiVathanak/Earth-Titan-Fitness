@@ -89,7 +89,7 @@ function logout() {
         <div class="facility"><span>FACILITY STATION</span><strong>Downtown Iron Gym</strong><i /></div>
         <nav><a class="active" href="#check-in">⌗ <span>Rapid Check-In</span></a><a href="#registration">♟ <span>Walk-In Registration</span></a></nav>
       </div>
-      <div class="sidebar-footer"><span>LIVE CAPACITY</span><div class="capacity"><i /></div><strong>{{ auth.user?.name ?? 'Desk Staff' }}</strong><small>{{ auth.role === 'admin' ? 'Gym Administrator' : 'Desk Commander' }}</small><button class="logout-button" type="button" @click="logout">↪ Logout</button></div>
+      <div class="sidebar-footer"><strong>{{ auth.user?.name ?? 'Desk Staff' }}</strong><small>{{ auth.role === 'admin' ? 'Gym Administrator' : 'Desk Commander' }}</small><button class="logout-button" type="button" @click="logout">↪ Logout</button></div>
     </aside>
     <main>
       <header class="topbar"><div><span class="eyebrow">STAFF TERMINAL / CASHIER STATION</span><h1>Rapid Check-In</h1></div><div class="station-status"><span class="online" /> SYSTEM ONLINE <b>MV</b></div></header>

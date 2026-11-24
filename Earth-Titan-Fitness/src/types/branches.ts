@@ -25,10 +25,5 @@ export interface BranchDetail {
   holidayTitleClass: string
   holidaySub: string
   amenities: BranchAmenity[]
-  loadIcon: string
-  loadText: string
-  loadTextClass: string
-  loadBarClass: string
-  loadWidth: string
 }
 

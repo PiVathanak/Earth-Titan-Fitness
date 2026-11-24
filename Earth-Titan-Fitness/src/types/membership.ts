@@ -35,7 +35,6 @@ export interface BranchAccess {
   type: 'primary' | 'regional'
   typeLabel: string
   address: string
-  capacityPercent: number
   isActive: boolean
 }
 
