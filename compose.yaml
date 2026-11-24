@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build: ./Earth-Titan-Fitness
+    container_name: earth-titan-fitness
+    ports:
+      - "5173:5173"
+    environment:
+      - PORT=5173
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+
+  backend:
+    build: ./api
+    container_name: earth-titan-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
