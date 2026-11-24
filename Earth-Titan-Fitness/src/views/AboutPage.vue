@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import type { MembershipOption } from '@/types/about'
 import branch6 from '@/images/branch1-6.png'
 import heavyCalibrationIron from '@/images/heavyCalibrationIron.png'
 import reinforceChalkDeck from '@/images/reinforceChalkDeck.png'
@@ -94,36 +95,46 @@ const telemetryStats = [
   },
 ]
 
-const directors = [
+const membershipOptions: MembershipOption[] = [
   {
-    initials: 'MV',
-    command: 'COMMAND 01',
-    name: 'MARCUS VANCE',
-    role: 'Head of Facility Operations & Powerlifting Specialist',
-    text: 'Former national record holder with over 15 years directing competitive powerlifting arenas. Oversees industrial equipment lifecycle, rack ergonomics, and platform safety architecture across all compounds.',
-    specialization: 'Squat & Deadlift Mechanics',
-    accreditation: 'USAPL Senior Level II / CSCS',
-    station: 'Sector Alpha (HQ)',
+    tier: 'TIER 01',
+    icon: 'calendar_month',
+    name: 'TITAN MONTH-TO-MONTH',
+    duration: '1 MONTH',
+    price: '$29.99',
+    billingNote: 'Billed per 1-month term',
+    description:
+      'Flexible 1-month pass giving you unlimited visits at every Earth-Titan Fitness gym. Train as often as you like across all locations—just give your Membership ID to front-desk staff when you arrive.',
+    access: 'Every Earth-Titan Gym',
+    commitment: '1 Month',
+    perks: 'Unlimited Visits · Staff ID Check-In',
   },
   {
-    initials: 'ER',
-    command: 'COMMAND 02',
-    name: 'ELENA ROSTOVA',
-    role: 'Director of Athletic Programming & Olympic Coach',
-    text: 'International Olympic weightlifting coach specializing in bar trajectory velocity, explosive triple-extension cadence, and periodized loading protocols for competitive strength contenders.',
-    specialization: 'Snatch / Clean & Jerk Physics',
-    accreditation: 'USAW National Coach / MS ExSci',
-    station: 'Iron Vault Metro',
+    tier: 'TIER 02',
+    icon: 'fitness_center',
+    name: 'TITAN STANDARD IRON',
+    duration: '6 MONTHS',
+    price: '$139.99',
+    billingNote: 'Billed per 6-month term',
+    description:
+      'Six-month commitment pass with unlimited visits across every Earth-Titan Fitness gym. Enjoy unrestricted training frequency at any branch by presenting your Membership ID to staff at the desk.',
+    access: 'Every Earth-Titan Gym',
+    commitment: '6 Months',
+    perks: 'Unlimited Visits · Staff ID Check-In',
   },
   {
-    initials: 'JR',
-    command: 'COMMAND 03',
-    name: 'DR. JAXSON REED',
-    role: 'Chief Sports Biomechanist & Nutrition Protocol Director',
-    text: 'PhD in Kinetic Biomechanics. Formulates all in-house nutrition formulas at the Titan Fuel Lab and directs the recovery protocols that accelerate muscle protein synthesis and prevent connective tissue strain.',
-    specialization: 'Cellular Hydration & Bioenergetics',
-    accreditation: 'PhD Biomechanics / CISSN Fellow',
-    station: 'Apex Compound',
+    tier: 'TIER 03 // FLAGSHIP',
+    icon: 'workspace_premium',
+    name: 'TITAN PRO BLACK',
+    duration: '12 MONTHS',
+    price: '$319.99',
+    billingNote: 'Billed per 12-month annual term',
+    description:
+      'Full-year flagship pass offering unlimited visits to every Earth-Titan Fitness gym at our best long-term value. No biometric scan needed—simply give your Membership ID to front-desk staff to check in.',
+    access: 'Every Earth-Titan Gym',
+    commitment: '12 Months',
+    perks: 'Unlimited Visits · Staff ID Check-In',
+    featured: true,
   },
 ]
 
@@ -418,8 +429,8 @@ const standards = [
           </div>
         </section>
 
-        <!-- Founding Command -->
-        <section class="w-full py-margin bg-surface-container-lowest">
+        <!-- Membership Options -->
+        <section id="membership-options" class="w-full py-margin bg-surface-container-lowest">
           <div class="max-w-7xl mx-auto px-margin">
             <div
               class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md"
@@ -428,79 +439,97 @@ const standards = [
                 <span
                   class="font-label-caps text-label-caps uppercase text-primary-container tracking-widest block mb-1"
                 >
-                  LEADERSHIP DIVISION // CADRE
+                  MEMBERSHIP TIERS // ACCESS PASSES
                 </span>
                 <h2
                   class="font-headline-lg text-headline-lg uppercase text-on-surface tracking-tight"
                 >
-                  MEET THE FOUNDING COMMAND &amp; COACHING DIRECTORS
+                  MEMBERSHIP OPTIONS
                 </h2>
               </div>
               <span class="font-body-sm text-body-sm text-secondary max-w-sm">
-                No lifestyle influencers. Our operational leads hold national podiums, doctoral
-                credentials, and decades under heavy iron.
+                Transparent commitment tiers with universal access across every Earth-Titan Fitness
+                branch. Register or renew directly at any facility front desk.
               </span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
               <div
-                v-for="(person, i) in directors"
-                :key="person.name"
+                v-for="plan in membershipOptions"
+                :key="plan.name"
                 class="bg-surface-container p-space-lg rounded-sm flex flex-col justify-between hover:bg-surface-container-high transition-colors"
+                :class="plan.featured ? 'ring-1 ring-primary-container/70' : ''"
               >
                 <div>
                   <div class="flex items-center justify-between mb-space-md">
                     <div
-                      class="w-14 h-14 rounded-sm flex items-center justify-center font-display-lg text-headline-md tracking-wider"
+                      class="w-14 h-14 rounded-sm flex items-center justify-center"
                       :class="
-                        i === 0
+                        plan.featured
                           ? 'bg-primary-container text-on-primary-container'
                           : 'bg-surface-container-highest text-on-surface'
                       "
                     >
-                      {{ person.initials }}
+                      <span class="material-symbols-outlined text-[28px]">{{ plan.icon }}</span>
                     </div>
                     <span
                       class="px-2.5 py-1 bg-surface-container-highest font-label-caps text-label-caps uppercase rounded-sm"
-                      :class="i === 0 ? 'text-primary-container' : 'text-primary'"
+                      :class="plan.featured ? 'text-primary-container' : 'text-primary'"
                     >
-                      {{ person.command }}
+                      {{ plan.tier }}
                     </span>
                   </div>
+
                   <h3
                     class="font-headline-md text-headline-md uppercase text-on-surface tracking-tight mb-1"
                   >
-                    {{ person.name }}
+                    {{ plan.name }}
                   </h3>
                   <span
                     class="font-label-caps text-label-caps text-primary uppercase block mb-space-md"
-                    >{{ person.role }}</span
+                    >DURATION: {{ plan.duration }}</span
                   >
+
+                  <div class="mb-space-md pb-space-md border-b border-surface-container-highest">
+                    <div class="flex items-baseline gap-2">
+                      <span class="font-display-lg text-display-lg text-on-surface leading-none">{{
+                        plan.price
+                      }}</span>
+                      <span class="font-label-caps text-label-caps uppercase text-secondary"
+                        >/ {{ plan.duration }}</span
+                      >
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary mt-1 block">{{
+                      plan.billingNote
+                    }}</span>
+                  </div>
+
                   <p
                     class="font-body-base text-body-base text-secondary mb-space-lg leading-relaxed"
                   >
-                    {{ person.text }}
+                    {{ plan.description }}
                   </p>
                 </div>
+
                 <div
                   class="pt-space-md bg-surface-container-low p-space-md rounded-sm flex flex-col gap-2"
                 >
                   <div class="flex items-center justify-between text-body-sm font-label-sm">
-                    <span class="text-secondary">Specialization:</span>
+                    <span class="text-secondary">Term Length:</span>
                     <span class="text-on-surface font-body-sm-bold uppercase">{{
-                      person.specialization
+                      plan.commitment
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between text-body-sm font-label-sm">
-                    <span class="text-secondary">Accreditation:</span>
+                    <span class="text-secondary">Entry &amp; Check-In:</span>
                     <span class="text-on-surface font-body-sm-bold uppercase">{{
-                      person.accreditation
+                      plan.perks
                     }}</span>
                   </div>
                   <div class="flex items-center justify-between text-body-sm font-label-sm">
-                    <span class="text-secondary">Compound Station:</span>
+                    <span class="text-secondary">Branch Access:</span>
                     <span class="text-primary-container font-body-sm-bold uppercase">{{
-                      person.station
+                      plan.access
                     }}</span>
                   </div>
                 </div>
@@ -605,7 +634,7 @@ const standards = [
                 <a
                   class="bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-sm text-headline-sm uppercase px-space-lg py-space-md rounded-sm transition-all shadow-[0_0_16px_rgba(229,9,20,0.4)] text-center flex items-center justify-center gap-2"
                   data-path="membership"
-                  href="#"
+                  href="#membership-options"
                 >
                   <span class="material-symbols-outlined text-[20px]">badge</span>
                   VIEW MEMBERSHIP OPTIONS

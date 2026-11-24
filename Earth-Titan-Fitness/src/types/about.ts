@@ -28,15 +28,18 @@ export interface TelemetryStat {
   text: string
 }
 
-export interface Director {
-  initials: string
-  command: string
+export interface MembershipOption {
+  tier: string
+  icon: string
   name: string
-  role: string
-  text: string
-  specialization: string
-  accreditation: string
-  station: string
+  duration: string
+  price: string
+  billingNote: string
+  description: string
+  access: string
+  commitment: string
+  perks: string
+  featured?: boolean
 }
 
 export interface FacilityStandard {
