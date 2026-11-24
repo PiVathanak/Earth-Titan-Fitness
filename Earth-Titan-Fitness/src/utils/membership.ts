@@ -30,6 +30,33 @@ export function dbStatus(expirationDate: string): Membership['status'] {
   return displayStatus(expirationDate) === 'expired' ? 'expired' : 'active'
 }
 
+/** Duration in months for each membership plan. */
+export const PLAN_MONTHS: Record<string, number> = {
+  'Titan Month-to-Month': 1,
+  'Titan Standard Iron': 6,
+  'Titan Pro Black': 12,
+}
+
+/** Adds calendar months to a YYYY-MM-DD date, clamping month-end days cleanly. */
+export function addMonthsIso(isoDate: string, months: number): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate)
+  if (!match) return ''
+  const year = Number(match[1])
+  const monthIndex = Number(match[2]) - 1
+  const day = Number(match[3])
+
+  const totalMonths = year * 12 + monthIndex + months
+  const targetYear = Math.floor(totalMonths / 12)
+  const targetMonthIndex = ((totalMonths % 12) + 12) % 12
+  const daysInTargetMonth = new Date(Date.UTC(targetYear, targetMonthIndex + 1, 0)).getUTCDate()
+  const clampedDay = Math.min(day, daysInTargetMonth)
+
+  const yyyy = String(targetYear).padStart(4, '0')
+  const mm = String(targetMonthIndex + 1).padStart(2, '0')
+  const dd = String(clampedDay).padStart(2, '0')
+  return `${yyyy}-${mm}-${dd}`
+}
+
 export function formatDate(iso: string): string {
   if (!iso) return '—'
   const date = new Date(`${iso}T00:00:00`)

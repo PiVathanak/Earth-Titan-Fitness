@@ -2,13 +2,17 @@
 import { computed, reactive, ref, watch } from 'vue'
 import type { AdminMember, NewMember } from '@/types/admin'
 import { useMembersStore } from '@/stores/members'
-import { todayIso } from '@/utils/membership'
+import { addMonthsIso, PLAN_MONTHS, todayIso } from '@/utils/membership'
 
 const props = defineProps<{ open: boolean; member?: AdminMember | null; saving?: boolean; serverError?: string | null }>()
 const emit = defineEmits<{ close: []; save: [member: NewMember] }>()
 
 const store = useMembersStore()
-const plans = ['Titan Pro Black', 'Titan Standard Iron', 'Titan Month-to-Month']
+const plans = [
+  { value: 'Titan Month-to-Month', label: 'Titan Month-to-Month (1 Month)' },
+  { value: 'Titan Standard Iron', label: 'Titan Standard Iron (6 Months)' },
+  { value: 'Titan Pro Black', label: 'Titan Pro Black (12 Months)' },
+]
 
 type Field = keyof NewMember
 const empty = (): NewMember => ({ name: '', email: '', memberId: '', plan: '', registerDate: todayIso(), expireDate: '' })
@@ -24,6 +28,15 @@ watch(() => props.open, (open) => {
   ;(Object.keys(touched) as Field[]).forEach((k) => (touched[k] = false))
   submitted.value = false
 })
+
+function syncExpireDate() {
+  const months = PLAN_MONTHS[form.plan]
+  if (months && form.registerDate) {
+    form.expireDate = addMonthsIso(form.registerDate, months)
+  } else if (!months) {
+    form.expireDate = ''
+  }
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const CODE_RE = /^ETF-\d{5}$/
@@ -91,20 +104,20 @@ function submit() {
             <small v-if="show('memberId')" id="err-code" class="error">{{ errors.memberId }}</small>
           </label>
           <label :class="{ invalid: show('plan') }">Plan
-            <select v-model="form.plan" :aria-invalid="!!show('plan')" aria-describedby="err-plan" @blur="touched.plan = true">
+            <select v-model="form.plan" :aria-invalid="!!show('plan')" aria-describedby="err-plan" @change="syncExpireDate" @blur="touched.plan = true">
               <option value="" disabled>Select a plan</option>
-              <option v-for="p in plans" :key="p" :value="p">{{ p }}</option>
+              <option v-for="p in plans" :key="p.value" :value="p.value">{{ p.label }}</option>
             </select>
             <small v-if="show('plan')" id="err-plan" class="error">{{ errors.plan }}</small>
           </label>
         </div>
         <div class="form-grid">
           <label :class="{ invalid: show('registerDate') }">Register date
-            <input v-model="form.registerDate" type="date" :aria-invalid="!!show('registerDate')" aria-describedby="err-reg" @blur="touched.registerDate = true" />
+            <input v-model="form.registerDate" type="date" :aria-invalid="!!show('registerDate')" aria-describedby="err-reg" @input="syncExpireDate" @change="syncExpireDate" @blur="touched.registerDate = true" />
             <small v-if="show('registerDate')" id="err-reg" class="error">{{ errors.registerDate }}</small>
           </label>
-          <label :class="{ invalid: show('expireDate') }">Expire date
-            <input v-model="form.expireDate" type="date" :aria-invalid="!!show('expireDate')" aria-describedby="err-exp" @blur="touched.expireDate = true" />
+          <label :class="{ invalid: show('expireDate') }">Due / Expire date (auto)
+            <input v-model="form.expireDate" type="date" readonly class="readonly-input" :aria-invalid="!!show('expireDate')" aria-describedby="err-exp" />
             <small v-if="show('expireDate')" id="err-exp" class="error">{{ errors.expireDate }}</small>
           </label>
         </div>
@@ -123,6 +136,7 @@ function submit() {
 .eyebrow { color: #ff6b72; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 form { display: grid; gap: 1rem; } label { display: grid; gap: 0.4rem; align-content: start; color: #c4c4c4; font-size: 0.75rem; font-weight: 600; } input, select { width: 100%; padding: 0.7rem 0.8rem; color: #fff; background: #2c2c2c; border: 1px solid #454545; border-radius: 0.3rem; } input:focus, select:focus { outline: 1px solid #e50914; border-color: #e50914; }
 .invalid input, .invalid select { border-color: #ff6b72; }
+.readonly-input { color: #b5b5b5; background: #222; cursor: not-allowed; }
 .error { color: #ff6b72; font-size: 0.72rem; font-weight: 500; }
 .server-error { margin: 0; padding: 0.6rem 0.8rem; color: #ffdad6; background: #4c0519; border-radius: 0.3rem; font-size: 0.8rem; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }.modal__actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.5rem; }.modal__actions button { padding: 0.7rem 1rem; border: 1px solid #454545; border-radius: 0.3rem; cursor: pointer; font-weight: 700; text-transform: uppercase; }.modal__actions button:disabled { opacity: 0.6; cursor: wait; }.secondary { color: #ddd; background: #303030; }.primary { color: #fff; background: #e50914; border-color: #e50914 !important; }
