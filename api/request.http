@@ -1,7 +1,15 @@
 @baseUrl = http://localhost:3000
 
+###############################################################################
+# HEALTH CHECK
+###############################################################################
+
 ### 0. Health Check (200 OK)
 GET {{baseUrl}}/
+
+###############################################################################
+# BRANCHES MODULE (/branches)
+###############################################################################
 
 ### 1. List All Seeded Branches (200 OK)
 GET {{baseUrl}}/branches
@@ -62,7 +70,6 @@ Content-Type: application/json
 }
 
 ### 8. Create Branch — DTO Validation Errors (400 Bad Request)
-# Tests: short name (<3), short address (<5), invalid HH:mm time, capacity > 100, and non-whitelisted extraField
 POST {{baseUrl}}/branches
 Content-Type: application/json
 
@@ -79,7 +86,6 @@ Content-Type: application/json
 }
 
 ### 9. Create Branch — Invalid Operating Hours Order (400 Bad Request)
-# closingTime <= openingTime when is24Hours is false
 POST {{baseUrl}}/branches
 Content-Type: application/json
 
@@ -103,16 +109,153 @@ Content-Type: application/json
   "closingTime": "23:00"
 }
 
-### 11. Update Branch — Validation Error on Partial Update (400 Bad Request)
-PATCH {{baseUrl}}/branches/2
+### 11. Delete Branch by ID (204 No Content)
+DELETE {{baseUrl}}/branches/5
+
+###############################################################################
+# USERS MODULE (/users)
+###############################################################################
+
+### 12. List All Users — Password Stripped (200 OK)
+GET {{baseUrl}}/users
+
+### 13. Filter Users by Role `?role=customer` (200 OK)
+GET {{baseUrl}}/users?role=customer
+
+### 14. Find User by Email `?email=` (Used by Frontend Login)
+GET {{baseUrl}}/users?email=staff@titanathletics.io
+
+### 15. Get Single User by ID (200 OK)
+GET {{baseUrl}}/users/1
+
+### 16. Get Single User — Missing ID (404 Not Found)
+GET {{baseUrl}}/users/999
+
+### 17. Create User — Valid Payload (201 Created)
+POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "capacityPercent": -10
+  "name": "Viktor Drago",
+  "email": "v.drago@titanathletics.io",
+  "password": "password123",
+  "role": "customer"
 }
 
-### 12. Delete Branch by ID (204 No Content)
-DELETE {{baseUrl}}/branches/5
+### 18. Create User — Duplicate Email (409 Conflict)
+POST {{baseUrl}}/users
+Content-Type: application/json
 
-### 13. Verify Deleted Branch Returns 404 (404 Not Found)
-GET {{baseUrl}}/branches/5
+{
+  "name": "Marcus Clone",
+  "email": "m.vance@titanathletics.io",
+  "password": "password123",
+  "role": "customer"
+}
+
+### 19. Create User — DTO Validation Errors (400 Bad Request)
+# Tests: 1-char/numeric name, invalid email, short password (<6), invalid role
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "1",
+  "email": "not-an-email",
+  "password": "123",
+  "role": "superadmin"
+}
+
+### 20. Update User — Partial Update (200 OK)
+PATCH {{baseUrl}}/users/9
+Content-Type: application/json
+
+{
+  "name": "Viktor K. Drago"
+}
+
+###############################################################################
+# MEMBERSHIPS MODULE (/memberships)
+###############################################################################
+
+### 21. List All Memberships with Linked User `?_expand=user` (200 OK)
+GET {{baseUrl}}/memberships?_expand=user
+
+### 22. Lookup Membership by Gym ID Code (US-03 Staff Check-In, 200 OK)
+GET {{baseUrl}}/memberships?membershipCode=ETF-89241&_expand=user
+
+### 23. Lookup Membership by User ID (US-02 Customer Portal, 200 OK)
+GET {{baseUrl}}/memberships?userId=1
+
+### 24. Paginate & Filter Memberships `?_page=1&_limit=3&status=active` (200 OK)
+GET {{baseUrl}}/memberships?_expand=user&status=active&_page=1&_limit=3
+
+### 25. Get Single Membership by ID with User (200 OK)
+GET {{baseUrl}}/memberships/1?_expand=user
+
+### 26. Create Membership — Valid Payload for User #9 (201 Created)
+# Run Request #17 first so User #9 exists without a membership
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "userId": 9,
+  "membershipCode": "ETF-44556",
+  "plan": "Titan Pro Black",
+  "registrationDate": "2026-11-24",
+  "expirationDate": "2027-11-24",
+  "status": "active"
+}
+
+### 27. Create Membership — User Already Has Membership (409 Conflict)
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "membershipCode": "ETF-99999",
+  "plan": "Titan Standard Iron",
+  "registrationDate": "2026-11-24",
+  "expirationDate": "2027-11-24",
+  "status": "active"
+}
+
+### 28. Create Membership — Missing User Foreign Key (404 Not Found)
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "userId": 999,
+  "membershipCode": "ETF-99998",
+  "plan": "Titan Standard Iron",
+  "registrationDate": "2026-11-24",
+  "expirationDate": "2027-11-24",
+  "status": "active"
+}
+
+### 29. Create Membership — DTO & Date Validation Errors (400 Bad Request)
+# Tests: bad ETF-XXXXX code, invalid plan, and expirationDate <= registrationDate
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "userId": 7,
+  "membershipCode": "BAD-123",
+  "plan": "Gold Tier",
+  "registrationDate": "2026-11-24",
+  "expirationDate": "2026-01-01",
+  "status": "active"
+}
+
+### 30. Update Membership — Partial Update (200 OK)
+PATCH {{baseUrl}}/memberships/7
+Content-Type: application/json
+
+{
+  "plan": "Titan Standard Iron"
+}
+
+### 31. Delete Membership & Linked User (204 No Content)
+DELETE {{baseUrl}}/memberships/7
+
+### 32. Delete Created User #9 (204 No Content)
+DELETE {{baseUrl}}/users/9
