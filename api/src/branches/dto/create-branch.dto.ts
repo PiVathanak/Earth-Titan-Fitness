@@ -124,7 +124,7 @@ export class CreateBranchDto {
 
   @IsOptional()
   @IsArray()
-  @ArrayMaxSize(12)
+  @ArrayMaxSize(20)
   @ValidateNested({ each: true })
   @Type(() => AmenityDto)
   amenities?: AmenityDto[];

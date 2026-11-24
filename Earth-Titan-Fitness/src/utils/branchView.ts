@@ -17,6 +17,35 @@ const images: Record<string, string> = {
   'branch1-6.png': branch6,
 }
 
+export const BRANCH_IMAGE_OPTIONS = [
+  { value: 'branch1-1.png', label: 'Flagship Powerlifting Floor (branch1-1.png)', url: branch1 },
+  { value: 'branch1-2.png', label: 'Turf & Heavy Athletics Bay (branch1-2.png)', url: branch2 },
+  { value: 'branch1-3.png', label: 'Industrial Mezzanine Rig (branch1-3.png)', url: branch3 },
+  { value: 'branch1-4.png', label: 'Autonomous 24/7 Deck (branch1-4.png)', url: branch4 },
+  { value: 'branch1-5.png', label: 'Barbell Calibration Vault (branch1-5.png)', url: branch5 },
+  { value: 'branch1-6.png', label: 'Compound Exterior & Arena (branch1-6.png)', url: branch6 },
+] as const
+
+export const PRESET_AMENITIES: GymBranch['amenities'] = [
+  { icon: 'fitness_center', label: 'Powerlifting Pods' },
+  { icon: 'sports_gymnastics', label: 'Olympic Platforms' },
+  { icon: 'ac_unit', label: 'Cold Plunge & Sauna' },
+  { icon: 'sprint', label: 'Turf Sprint Track' },
+  { icon: 'weight', label: 'Free Weights up to 150lbs' },
+  { icon: 'precision_manufacturing', label: 'Hammer Strength Circuit' },
+  { icon: 'chair', label: 'Recovery Lounge' },
+  { icon: 'sports_mma', label: 'Combat Sparring Ring' },
+  { icon: 'hardware', label: 'Strongman Log & Stones' },
+  { icon: 'shower', label: 'Hydrotherapy Suite' },
+  { icon: 'qr_code_scanner', label: 'Keyless Access' },
+  { icon: 'security', label: '24/7 CCTV & Guard' },
+  { icon: 'bolt', label: 'Hi-Velocity Functional Rig' },
+]
+
+export function resolveBranchImage(imageName: string): string {
+  return images[imageName] ?? branch1
+}
+
 export interface BranchCard {
   id: number
   name: string
