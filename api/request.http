@@ -1,0 +1,118 @@
+@baseUrl = http://localhost:3000
+
+### 0. Health Check (200 OK)
+GET {{baseUrl}}/
+
+### 1. List All Seeded Branches (200 OK)
+GET {{baseUrl}}/branches
+
+### 2. Search Branches by Query `?q=` (200 OK)
+GET {{baseUrl}}/branches?q=titanium
+
+### 3. Get Single Branch by ID (200 OK)
+GET {{baseUrl}}/branches/1
+
+### 4. Get Single Branch — Non-Integer ID (400 Bad Request via ParseIntPipe)
+GET {{baseUrl}}/branches/abc
+
+### 5. Get Single Branch — Missing ID (404 Not Found)
+GET {{baseUrl}}/branches/999
+
+### 6. Create Branch — Valid Payload (201 Created)
+POST {{baseUrl}}/branches
+Content-Type: application/json
+
+{
+  "name": "Southside Powerhouse Arena",
+  "address": "1904 Industrial Road, South Metro, NY 10040",
+  "badge": "Branch 05",
+  "openingTime": "06:00",
+  "closingTime": "22:00",
+  "weekendOpeningTime": "07:00",
+  "weekendClosingTime": "20:00",
+  "is24Hours": false,
+  "capacityPercent": 50,
+  "amenities": [
+    { "icon": "fitness_center", "label": "Monolift Station" }
+  ],
+  "holidaySchedule": [
+    {
+      "date": "2026-12-31",
+      "name": "New Years Eve",
+      "type": "adjusted",
+      "openingTime": "08:00",
+      "closingTime": "16:00"
+    }
+  ]
+}
+
+### 7. Create Branch — Duplicate Name (409 Conflict)
+POST {{baseUrl}}/branches
+Content-Type: application/json
+
+{
+  "name": "Downtown Titanium Flagship",
+  "address": "999 Duplicate Way, Central Metro, NY 10001",
+  "openingTime": "06:00",
+  "closingTime": "22:00",
+  "weekendOpeningTime": "07:00",
+  "weekendClosingTime": "20:00",
+  "is24Hours": false,
+  "capacityPercent": 10
+}
+
+### 8. Create Branch — DTO Validation Errors (400 Bad Request)
+# Tests: short name (<3), short address (<5), invalid HH:mm time, capacity > 100, and non-whitelisted extraField
+POST {{baseUrl}}/branches
+Content-Type: application/json
+
+{
+  "name": "A",
+  "address": "123",
+  "openingTime": "25:99",
+  "closingTime": "22:00",
+  "weekendOpeningTime": "06:00",
+  "weekendClosingTime": "20:00",
+  "is24Hours": false,
+  "capacityPercent": 150,
+  "extraField": "not allowed"
+}
+
+### 9. Create Branch — Invalid Operating Hours Order (400 Bad Request)
+# closingTime <= openingTime when is24Hours is false
+POST {{baseUrl}}/branches
+Content-Type: application/json
+
+{
+  "name": "Eastside Iron Vault",
+  "address": "220 Foundry Ave, East District, NY 10018",
+  "openingTime": "22:00",
+  "closingTime": "06:00",
+  "weekendOpeningTime": "07:00",
+  "weekendClosingTime": "20:00",
+  "is24Hours": false,
+  "capacityPercent": 10
+}
+
+### 10. Update Branch — Partial Update (200 OK)
+PATCH {{baseUrl}}/branches/2
+Content-Type: application/json
+
+{
+  "capacityPercent": 75,
+  "closingTime": "23:00"
+}
+
+### 11. Update Branch — Validation Error on Partial Update (400 Bad Request)
+PATCH {{baseUrl}}/branches/2
+Content-Type: application/json
+
+{
+  "capacityPercent": -10
+}
+
+### 12. Delete Branch by ID (204 No Content)
+DELETE {{baseUrl}}/branches/5
+
+### 13. Verify Deleted Branch Returns 404 (404 Not Found)
+GET {{baseUrl}}/branches/5
